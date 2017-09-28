@@ -66,7 +66,7 @@ class TitleChar(db.Model):
     title_id = db.Column(db.Integer, db.ForeignKey('titles.title_id'))
 
     title = db.relationship("Title", backref=db.backref("titles"))
-    char = db.relationship("Character", backref=db.backref("characters"))
+    title_char = db.relationship("Character", backref=db.backref("characters"))
 
     def __repr__(self):
         return "<Title_id=%d char_id=%d title_id=%d>" % (self.title_char_id,
@@ -84,7 +84,7 @@ class EpChar(db.Model):
     ep_id = db.Column(db.Integer, db.ForeignKey('episodes.ep_id'))
 
     ep = db.relationship("Episode", backref=db.backref("episodes"))
-    char = db.relationship("Character", backref=db.backref("characters"))
+    ep_char = db.relationship("Character", backref=db.backref("characters"))
 
     def __repr__(self):
         return "<Epchar_id=%d char_id=%s ep_id=%s>" % (self.ep_char_id,

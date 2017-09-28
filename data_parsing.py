@@ -172,11 +172,7 @@ import json
                 ep_char = EpChar(char_id=char_id,
                                  ep_id=ep_id)
 
-
-
-
-
-        db.session.add(ep_char)
+                 db.session.add(ep_char)
 
     db.session.commit()
 
