@@ -1,18 +1,76 @@
+
+
+# Game of Thrones
+# https://api.got.show/doc/
+
+# IMDB
+# https://www.omdbapi.com/
+
+# Etsy
+# https://www.etsy.com/developers/documentation/getting_started/api_basics
+
+
 import json
 
-json_string = open("chars.json").read()
-char_dict = json.loads(json_string)
-
-json_string = open("locations.json").read()
-location_dict = json.loads(json_string)
-
-json_string = open("episodes.json").read()
-episodes_dict = json.loads(json_string)
-
-json_string = open("paths.json").read()
-paths_dict = json.loads(json_string)
 
 
+# ********* CHAR *********
+
+
+# json_string = open("chars.json").read()
+# char_dict = json.loads(json_string)
+
+# for char in char_dict:
+#     print "%s, %s, %s" % (char['name'], char['male'], char.get('house', 'NULL'))
+
+
+# ********* EP ************
+
+
+# json_string = open("episodes.json").read()
+# episodes_dict = json.loads(json_string)
+
+
+
+# ********* LOC *************
+
+
+# json_string = open("./seed_data/locations.json").read()
+# location_dict = json.loads(json_string)
+
+# loc_set = set()
+# for loc in location_dict:
+#     for l in loc['locations']:
+#         loc_set.add(l)
+
+
+# ********* PATH ************
+
+
+# json_string = open("paths.json").read()
+# paths_dict = json.loads(json_string)
+
+#         for path in paths_dict:
+#             print path['name'], path['path'][-1]['alive']
+
+
+# ********* TITLE *********
+
+# json_string = open("paths.json").read()
+# paths_dict = json.loads(json_string)
+
+
+# json_string = open("./seed_data/chars.json").read()
+# chars_dict = json.loads(json_string)
+
+# title_set = set()
+
+# for char in chars_dict:
+#     for title in char.get('titles'):
+#         title_set.add(title)
+#         print title
+
+# print title_set
 
 
 
@@ -23,17 +81,17 @@ paths_dict = json.loads(json_string)
 
 # *** All chars: ***
 
-#     {u'male': False,
-#      u'titles': [],
-#     u'name': u'Zia Frey',
-#     u'house': u'House Frey',
-#     u'pageRank': 7.5,
-#     u'dateOfBirth': 285, u'__v': 0,
-#     u'books': [u'A Clash of Kings', u'A Storm of Swords', u'A Feast for Crows'],
-#     u'updatedAt': u'2016-04-02T13:14:40.614Z',
-#     u'_id': u'56ffc5c00432440819385f59',
-#     u'slug': u'Zia_Frey',
-#     u'createdAt': u'2016-04-02T13:14:40.614Z'}
+    {u'male': False,
+     u'titles': [],
+    u'name': u'Zia Frey',
+    u'house': u'House Frey',
+    u'pageRank': 7.5,
+    u'dateOfBirth': 285, u'__v': 0,
+    u'books': [u'A Clash of Kings', u'A Storm of Swords', u'A Feast for Crows'],
+    u'updatedAt': u'2016-04-02T13:14:40.614Z',
+    u'_id': u'56ffc5c00432440819385f59',
+    u'slug': u'Zia_Frey',
+    u'createdAt': u'2016-04-02T13:14:40.614Z'}
 
 # 1 char_id
 # 2 = name
@@ -93,4 +151,40 @@ paths_dict = json.loads(json_string)
 
 #1 = name
 #2 = alive
+
+
+
+
+    json_string = open("./seed_data/episodes.json").read()
+    ep_char_dict = json.loads(json_string)
+
+    for ep in ep_char_dict:
+
+            for char in ep['characters']:
+
+                char_obj = Character.query.filter(Character.char_name == char).first()
+                char_id = char_obj.char_id
+                ep_name = ep['name']
+
+                ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
+                ep_id = ep_obj.ep_id
+
+                ep_char = EpChar(char_id=char_id,
+                                 ep_id=ep_id)
+
+
+
+
+
+        db.session.add(ep_char)
+
+    db.session.commit()
+
+
+
+
+
+
+
+
 
