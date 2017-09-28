@@ -4,13 +4,14 @@ import json
 
 from sqlalchemy import func
 
-from model import Character, Title, Episode, EpChar, TitleChar
+from model import Character, Title, Episode, CharTitle, CharEp
 from model import connect_to_db, db
 
 from server import app
 
 
 ##############################################
+#Load Primary Tables
 
 
 def load_characters():
@@ -31,14 +32,11 @@ def load_characters():
         char = Character(char_name=char_name,
                          char_male=char_male,
                          char_house=char_house,
-                         char_alive=None)
+                         char_dead="Not yet..")
 
         db.session.add(char)
 
     db.session.commit()
-
-
-##############################################
 
 
 def load_titles():
@@ -66,9 +64,6 @@ def load_titles():
     db.session.commit()
 
 
-##############################################
-
-
 def load_episodes():
     """Load episodes from seed_data/episodes into database."""
 
@@ -90,21 +85,21 @@ def load_episodes():
 
     db.session.commit()
 
-
 ###############################################
+# Load Associative Tables
 
 
-def load_titlechar():
-    """Load associative table with Titles and Character IDs."""
+def load_char_title():
+    """Load associative table with Character IDs and Titles."""
 
-    print "Title-Characters..."
+    print "Character-Titles..."
 
-    TitleChar.query.delete()
+    CharTitle.query.delete()
 
     json_string = open("./seed_data/chars.json").read()
-    title_char_dict = json.loads(json_string)
+    char_title_dict = json.loads(json_string)
 
-    for char in title_char_dict:
+    for char in char_title_dict:
 
         if char['titles']:
 
@@ -121,10 +116,10 @@ def load_titlechar():
 
                 title_id = title_obj.title_id
 
-                title_char = TitleChar(char_id=char_id,
+                char_title = CharTitle(char_id=char_id,
                                        title_id=title_id)
 
-                db.session.add(title_char)
+                db.session.add(char_title)
 
         else:
             pass
@@ -132,37 +127,33 @@ def load_titlechar():
     db.session.commit()
 
 
-###############################################
-
-
-def load_epchar():
-    """Load associative table with Episodes and Character IDs."""
+def load_char_episodes():
+    """Load associative table with Character IDs and Episodes."""
 
     print "Episode-Characters..."
 
-    EpChar.query.delete()
+    CharEp.query.delete()
 
     json_string = open("./seed_data/episodes.json").read()
-    ep_char_dict = json.loads(json_string)
+    char_ep_dict = json.loads(json_string)
 
-    for ep in ep_char_dict:
+    for ep in char_ep_dict:
 
             for char in ep['characters']:
 
                 char_obj = Character.query.filter(Character.char_name == char).first()
                 char_id = char_obj.char_id
-                ep_name = ep['name']
 
+                ep_name = ep['name']
                 ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
                 ep_id = ep_obj.ep_id
 
-                ep_char = EpChar(char_id=char_id,
+                char_ep = CharEp(char_id=char_id,
                                  ep_id=ep_id)
 
-                db.session.add(ep_char)
+                db.session.add(char_ep)
 
     db.session.commit()
-
 
 
 ##################################################
@@ -174,9 +165,9 @@ if __name__ == "__main__":
     db.create_all()
 
 
-load_characters()
-load_titles()
-load_episodes()
+# load_characters()
+# load_titles()
+# load_episodes()
 
-# load_titlechar()
-# load_epchar()
+# load_char_title()
+# load_char_episodes()
