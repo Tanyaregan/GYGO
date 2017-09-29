@@ -7,63 +7,27 @@ from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
 # Search Functions
 
 
-def search_by_name(name):
-    """Searches db by char_name, pulls all associated info.
+def search_by_id(char_id):
+    """Searches by char_id int, pulls all associated info into a dictionary.
 
-        >>> search_by_name('Gilly')
-        {'char_dead': u'Not yet',
-         'char_eps': [u'Fire and Blood',
-          u'The North Remembers',
-          u'The Night Lands',
-          u'Dark Wings, Dark Words',
-          u'Walk of Punishment',
-          u'Kissed by Fire',
-          u'Second Sons',
-          u'The Bear and the Maiden Fair',
-          u'The Rains of Castamere',
-          u'The Lion and the Rose',
-          u'Mockingbird',
-          u'The Mountain and the Viper',
-          u'The Children',
-          u'The Wars to Come',
-          u'Sons of the Harpy',
-          u'Unbowed, Unbent, Unbroken',
-          u'The Gift',
-          u'The Dance of Dragons',
-          u"Mother's Mercy"],
-         'char_house': u'No Affiliation',
-         'char_male': False,
-         'char_name': 'Gilly',
-         'char_num': 647,
-         'char_titles': []}
-
-
-        >>> search_by_name('Aemond Targaryen')
-        {'char_dead': u'Totally',
-         'char_eps': [],
-         'char_house': u'House Targaryen',
-         'char_male': True,
-         'char_name': 'Aemond Targaryen',
-         'char_num': 29,
-         'char_titles': [u'Prince', u'Protector of the Realm', u'Prince Regent']}
-
+        >>> search_by_id()
 
 
     """
 
-    char_obj = Character.query.filter(Character.char_name == name).first()
+    char_obj = Character.query.filter(Character.char_id == char_id).first()
 
     # Basic character info:
 
-    char_num = char_obj.char_id
-    char_name = name
+    char_id = char_obj.char_id
+    char_name = char_obj.char_name
     char_male = char_obj.char_male
     char_house = char_obj.char_house
     char_dead = char_obj.char_dead
 
     # Title list:
 
-    title_list_obj = CharTitle.query.filter(CharTitle.char_id == char_num).all()
+    title_list_obj = CharTitle.query.filter(CharTitle.char_id == char_id).all()
 
     char_titles = []
 
@@ -74,7 +38,7 @@ def search_by_name(name):
 
     # Episode list:
 
-    ep_list_obj = CharEp.query.filter(CharEp.char_id == char_num).all()
+    ep_list_obj = CharEp.query.filter(CharEp.char_id == char_id).all()
 
     char_eps = []
 
@@ -87,7 +51,7 @@ def search_by_name(name):
 
     char_info = {}
 
-    char_info['char_num'] = char_num
+    char_info['char_id'] = char_id
     char_info['char_name'] = char_name
     char_info['char_male'] = char_male
     char_info['char_dead'] = char_dead
@@ -96,55 +60,107 @@ def search_by_name(name):
     char_info['char_eps'] = char_eps
 
     return char_info
-    print char_info
+
+
+def search_by_name(name):
+    """ Searches by char_name str, returns char_id int.
+
+    """
+
+    char_obj = Character.query.filter(Character.char_name == name).first()
+
+    return char_obj.char_id
 
 
 def search_by_gender(gender):
-    """Searches db by char_male, returns char_ids for all of that gender.
+    """Searches by char_male (Bool), returns char_ids int list.
 
     """
 
-    pass
+    char_obj_list = Character.query.filter(Character.char_male == gender).all()
+    char_id_list = []
+
+    for char in char_obj_list:
+        char_id_list.append(char.char_id)
+
+    return char_id_list
 
 
 def search_by_dead(dead):
-    """Searches db by char_dead, returns char_ids for all who have that title.
+    """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', returns char_ids int list.
 
     """
 
-    pass
+    char_obj_list = Character.query.filter(Character.char_dead == dead).all()
+    char_id_list = []
 
+    for char in char_obj_list:
+        char_id_list.append(char.char_id)
 
-def search_by_title(title):
-    """Searches db by a title, returns char_ids for all who have that title.
-
-    """
-
-    pass
+    return char_id_list
 
 
 def search_by_house(house):
-    """Searches db by house, returns char_ids for all chars in that house.
+    """Searches by char_house str, returns char_ids int list.
 
     """
 
-    pass
+    char_obj_list = Character.query.filter(Character.char_house == house).all()
+    char_id_list = []
+
+    for char in char_obj_list:
+        char_id_list.append(char.char_id)
+
+    return char_id_list
+
+
+def search_by_title(title):
+    """Searches by title_name str, returns char_ids int list.
+
+    """
+
+    title_obj = Title.query.filter(Title.title_name == title).first()
+
+    chartitle_obj_list = CharTitle.query.filter(CharTitle.title_id == title_obj.title_id).all()
+
+    char_id_list = []
+
+    for obj in chartitle_obj_list:
+        char_id_list.append(obj.char_id)
+
+    return char_id_list
 
 
 def search_by_episode(episode):
-    """Searches db by episode name, returns char_ids for all chars in that episode.
+    """Searches by ep_name str, returns char_ids int list.
 
     """
 
-    pass
+    ep_obj = Episode.query.filter(Episode.ep_name == episode).first()
+
+    charep_obj_list = CharEp.query.filter(CharEp.ep_id == ep_obj.ep_id).all()
+
+    char_id_list = []
+
+    for obj in charep_obj_list:
+        char_id_list.append(obj.char_id)
+
+    return char_id_list
 
 
 def search_by_season(season):
-    """Searches db by season number, returns all episodes in that season.
+    """Searches by ep_season int, returns ep_name str list.
 
     """
 
-    pass
+    ep_obj_list = Episode.query.filter(Episode.ep_season == season).all()
+
+    ep_name_list = []
+
+    for ep in ep_obj_list:
+        ep_name_list.append(ep.ep_name)
+
+    return ep_name_list
 
 
 ##########################################
