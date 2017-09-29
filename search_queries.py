@@ -84,6 +84,13 @@ def search_by_name(name):
 def search_by_gender(gender):
     """Searches by char_male (Bool), returns char_ids int list.
 
+        >>> search_by_gender(False) #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
+        [23, 33, 36, 38, 42, 43, 47, 51, 53, 57, 65, 66, 68, 70, 72, 80, 81, 82, 84,
+        86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, (...)]
+
+
+
+
     """
 
     char_obj_list = Character.query.filter(Character.char_male == gender).all()
@@ -92,14 +99,15 @@ def search_by_gender(gender):
     for char in char_obj_list:
         char_id_list.append(char.char_id)
 
-    return char_id_list
+    return sorted(char_id_list)
 
 
 def search_by_dead(dead):
-    """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', Undead), returns char_ids int list.
+    """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', Undead), 'Sorta'),
+       returns char_ids int list.
 
         >>> search_by_dead('Undead')
-        [2035, 216]
+        [216, 2035]
 
         >>> search_by_dead('Sorta')
         [925]
@@ -112,17 +120,17 @@ def search_by_dead(dead):
     for char in char_obj_list:
         char_id_list.append(char.char_id)
 
-    return char_id_list
+    return sorted(char_id_list)
 
 
 def search_by_house(house):
     """Searches by char_house str, returns char_ids int list.
 
-        >>> search_by_house('House Tarly')
+        >>> search_by_house('House Tarly')  #doctest: +NORMALIZE_WHITESPACE
         [455, 1481, 1751]
 
-        >>> search_by_house('Brotherhood without banners')
-        [111, 676, 1258, 432, 834, 981, 1010, 1112, 1218, 1421, 1802, 1781, 1945]
+        >>> search_by_house('Brotherhood without banners')  #doctest: +NORMALIZE_WHITESPACE
+        [111, 432, 676, 834, 981, 1010, 1112, 1218, 1258, 1421, 1781, 1802, 1945]
 
     """
 
@@ -132,16 +140,16 @@ def search_by_house(house):
     for char in char_obj_list:
         char_id_list.append(char.char_id)
 
-    return char_id_list
+    return sorted(char_id_list)
 
 
 def search_by_title(title):
     """Searches by title_name str, returns char_ids int list.
 
-        >>> search_by_title('Lady')
+        >>> search_by_title('Lady') #doctest: +NORMALIZE_WHITESPACE
         [24, 65, 70, 93, 112, 160, 233, 415, 633, 1020, 1170, 1261, 1516, 1650, 1667]
 
-        >>> search_by_title('Protector of the Realm')
+        >>> search_by_title('Protector of the Realm') #doctest: +NORMALIZE_WHITESPACE
         [29, 162, 327, 384, 508, 974, 1906]
 
     """
@@ -155,17 +163,17 @@ def search_by_title(title):
     for obj in chartitle_obj_list:
         char_id_list.append(obj.char_id)
 
-    return char_id_list
+    return sorted(char_id_list)
 
 
 def search_by_episode(episode):
     """Searches by ep_name str, returns char_ids int list.
 
-        >>> search_by_episode('Breaker of Chains')
-        [852, 678, 1425, 1854, 850, 327, 388, 925, 1405, 1152, 644, 264, 1648, 277, 272, 937, 372, 183, 63, 463, 1231, 680, 1187, 796, 500, 361, 1812, 1409, 795]
+        >>> search_by_episode('Breaker of Chains')  #doctest: +NORMALIZE_WHITESPACE
+        [63, 183, 264, 272, 277, 327, 361, 372, 388, 463, 500, 678, 680, 795, 796, 850, 852, 925, 937, 1152, 1187, 1231, 1405, 1409, 1425, 1644, 1648, 1812, 1854]
 
-        >>> search_by_episode('The Night Lands')
-        [316, 2016, 1041, 1790,  631, 1854, 327,  1405, 925,  1782, 264, 1648, 150, 1644, 1152, 875, 272, 1668, 361, 169, 1508, 635, 848, 1054, 277, 803, 647, 796, 99, 1413, 1601, 238, 1288, 1812]
+        >>> search_by_episode('The Night Lands')  #doctest: +NORMALIZE_WHITESPACE
+        [99, 150, 169, 238, 264, 272, 277, 316, 327, 361, 631, 635, 647, 796, 803, 848, 875, 925, 1041, 1054, 1152, 1288, 1405, 1413, 1508, 1601, 1644, 1648, 1668, 1782, 1790, 1812, 1854, 2016]
 
     """
 
@@ -178,17 +186,22 @@ def search_by_episode(episode):
     for obj in charep_obj_list:
         char_id_list.append(obj.char_id)
 
-    return char_id_list
+    return sorted(char_id_list)
 
 
 def search_by_season(season):
     """Searches by ep_season int, returns ep_name str list.
 
-        >>> search_by_season(4)
-        [u'Two Swords', u'Breaker of Chains', u'The Lion and the Rose', u'Oathkeeper', u'First of His Name', u'Mockingbird', u'The Mountain and the Viper', u'The Laws of Gods and Men', u'The Children', u'The Watchers on the Wall']
+        >>> search_by_season(4)  #doctest: +NORMALIZE_WHITESPACE
+        [u'Breaker of Chains', u'First of His Name', u'Mockingbird', u'Oathkeeper',
+        u'The Children', u'The Laws of Gods and Men', u'The Lion and the Rose',
+        u'The Mountain and the Viper', u'The Watchers on the Wall', u'Two Swords']
 
-        >>> search_by_season(2)
-        [u'The North Remembers', u'The Night Lands', u'What Is Dead May Never Die', u'Garden of Bones', u'The Ghost of Harrenhal', u'The Old Gods and the New', u'A Man Without Honor', u'The Prince of Winterfell', u'Valar Morghulis', u'Blackwater']
+        >>> search_by_season(2)  #doctest: +NORMALIZE_WHITESPACE
+        [u'A Man Without Honor', u'Blackwater', u'Garden of Bones',
+        u'The Ghost of Harrenhal',  u'The Night Lands', u'The North Remembers',
+        u'The Old Gods and the New', u'The Prince of Winterfell', u'Valar Morghulis',
+        u'What Is Dead May Never Die']
 
     """
 
@@ -199,7 +212,7 @@ def search_by_season(season):
     for ep in ep_obj_list:
         ep_name_list.append(ep.ep_name)
 
-    return ep_name_list
+    return sorted(ep_name_list)
 
 
 ##########################################
