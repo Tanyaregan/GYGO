@@ -24,11 +24,11 @@ class Character(db.Model):
     r_episode = db.relationship("Episode", backref="episodes", secondary="char_ep")
 
     def __repr__(self):
-        return "<char_id id=%d name=%s male=%s house=%s dead=%s>" % (self.char_id,
-                                                                     self.char_name,
-                                                                     self.char_male,
-                                                                     self.char_house,
-                                                                     self.char_dead)
+        return "<char_id=%d name=%s male=%s house=%s dead=%s>" % (self.char_id,
+                                                                  self.char_name,
+                                                                  self.char_male,
+                                                                  self.char_house,
+                                                                  self.char_dead)
 
 
 class Title(db.Model):
@@ -40,8 +40,8 @@ class Title(db.Model):
     title_name = db.Column(db.String(200))
 
     def __repr__(self):
-        return "<title_id=%d char_name=%s char_title=%s>" % (self.title_id,
-                                                             self.char_title)
+        return "<title_id=%d title_name=%s>" % (self.title_id,
+                                                self.title_name)
 
 
 class Episode(db.Model):
