@@ -10,11 +10,20 @@ from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
 def search_by_id(char_id):
     """Searches by char_id int, pulls all associated info into a dictionary.
 
-        >>> search_by_id(666)
-        {'char_dead': u'Unknown', 'char_eps': [], 'char_house': u'House Morrigen', 'char_id': 666, 'char_male': True, 'char_name': u'Grance Morrigen', 'char_titles': [u'Ser']}
+        >>> result = search_by_id(666).items()
+        >>> result.sort()
+        >>> result #doctest: +NORMALIZE_WHITESPACE
+        [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'House Morrigen'),
+        ('char_id', 666), ('char_male', True), ('char_name', u'Grance Morrigen'),
+        ('char_titles', [u'Ser'])]
 
-        >>> search_by_id(42)
-        {'char_dead': u'Unknown', 'char_eps': [], 'char_house': u'No Affiliation',  'char_id': 42, 'char_male': False, 'char_name': u'Alaric of Eysen', 'char_titles': []}
+
+        >>> result = search_by_id(42).items()
+        >>> result.sort()
+        >>> result #doctest: +NORMALIZE_WHITESPACE
+        [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'No Affiliation'),
+        ('char_id', 42), ('char_male', False), ('char_name', u'Alaric of Eysen'),
+        ('char_titles', [])]
 
     """
 
@@ -84,12 +93,8 @@ def search_by_name(name):
 def search_by_gender(gender):
     """Searches by char_male (Bool), returns char_ids int list.
 
-        >>> search_by_gender(False) #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
-        [23, 33, 36, 38, 42, 43, 47, 51, 53, 57, 65, 66, 68, 70, 72, 80, 81, 82, 84,
-        86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, (...)]
-
-
-
+        >>> search_by_gender(False) #doctest: +ELLIPSIS
+        [23, 33, 36, 38, 42, 43, 47, ...]
 
     """
 
@@ -103,7 +108,7 @@ def search_by_gender(gender):
 
 
 def search_by_dead(dead):
-    """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', Undead), 'Sorta'),
+    """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', 'Undead', 'Sorta'),
        returns char_ids int list.
 
         >>> search_by_dead('Undead')
@@ -126,10 +131,10 @@ def search_by_dead(dead):
 def search_by_house(house):
     """Searches by char_house str, returns char_ids int list.
 
-        >>> search_by_house('House Tarly')  #doctest: +NORMALIZE_WHITESPACE
+        >>> search_by_house('House Tarly')
         [455, 1481, 1751]
 
-        >>> search_by_house('Brotherhood without banners')  #doctest: +NORMALIZE_WHITESPACE
+        >>> search_by_house('Brotherhood without banners')
         [111, 432, 676, 834, 981, 1010, 1112, 1218, 1258, 1421, 1781, 1802, 1945]
 
     """
@@ -146,10 +151,10 @@ def search_by_house(house):
 def search_by_title(title):
     """Searches by title_name str, returns char_ids int list.
 
-        >>> search_by_title('Lady') #doctest: +NORMALIZE_WHITESPACE
+        >>> search_by_title('Lady')
         [24, 65, 70, 93, 112, 160, 233, 415, 633, 1020, 1170, 1261, 1516, 1650, 1667]
 
-        >>> search_by_title('Protector of the Realm') #doctest: +NORMALIZE_WHITESPACE
+        >>> search_by_title('Protector of the Realm')
         [29, 162, 327, 384, 508, 974, 1906]
 
     """
@@ -170,10 +175,14 @@ def search_by_episode(episode):
     """Searches by ep_name str, returns char_ids int list.
 
         >>> search_by_episode('Breaker of Chains')  #doctest: +NORMALIZE_WHITESPACE
-        [63, 183, 264, 272, 277, 327, 361, 372, 388, 463, 500, 678, 680, 795, 796, 850, 852, 925, 937, 1152, 1187, 1231, 1405, 1409, 1425, 1644, 1648, 1812, 1854]
+        [63, 183, 264, 272, 277, 327, 361, 372, 388, 463, 500, 678, 680, 795,
+        796, 850, 852, 925, 937, 1152, 1187, 1231, 1405, 1409, 1425, 1644,
+        1648, 1812, 1854]
 
         >>> search_by_episode('The Night Lands')  #doctest: +NORMALIZE_WHITESPACE
-        [99, 150, 169, 238, 264, 272, 277, 316, 327, 361, 631, 635, 647, 796, 803, 848, 875, 925, 1041, 1054, 1152, 1288, 1405, 1413, 1508, 1601, 1644, 1648, 1668, 1782, 1790, 1812, 1854, 2016]
+        [99, 150, 169, 238, 264, 272, 277, 316, 327, 361, 631, 635, 647, 796,
+        803, 848, 875, 925, 1041, 1054, 1152, 1288, 1405, 1413, 1508, 1601, 1644,
+        1648, 1668, 1782, 1790, 1812, 1854, 2016]
 
     """
 
