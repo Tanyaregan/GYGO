@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <h2>Episodes</h2>
+  <ul>
+  {% for ep in ep_list %}
+    <li>
+      <a href="/eps/{{ Episode.ep_id }}">{{ ep.ep_name }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+
+
+{% endblock %}

@@ -8,10 +8,11 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
 
-from search_queries import search_by_name, search_by_gender, search_by_dead
-from search_queries import search_by_house, search_by_title, search_by_episode
-from search_queries import search_by_season
-
+from search_queries import char_search_by_name, char_search_by_gender
+from search_queries import char_search_by_dead, char_earch_by_house
+from search_queries import char_search_by_title, char_search_by_episode
+from search_queries import char_search_by_season, char_search_by_id
+from search_queries import ep_search_by_name, ep_search_by_season
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ app.secret_key = "SEEKRIT"
 app.jinja_env.undefined = StrictUndefined
 
 ###########################################
-# Routes
+# Main routes
 
 
 @app.route('/')
@@ -37,33 +38,95 @@ def main_page():
     return render_template("main.html")
 
 
-@app.route('/main_results')
-def main_results():
-    """Show results from main.html search"""
+@app.route('/search.html')
+def main_search():
+    """gets info to use in search"""
 
     char_name_input = request.args.get("char_name_input")
-    # char_male_input = request.args.get("char_male_input")
-    # char_dead_input = request.args.get("char_dead_input")
-    # char_house_input = request.args.get("char_house_input")
-    # title_name_input = request.args.get("title_name_input")
-    # ep_name_input = request.args.get("ep_name_input")
-    # ep_season_input = request.args.get("ep_season_input")
+    char_male_input = request.args.get("char_male_input")
+    char_dead_input = request.args.get("char_dead_input")
+    char_house_input = request.args.get("char_house_input")
+    title_name_input = request.args.get("title_name_input")
+    ep_name_input = request.args.get("ep_name_input")
+    ep_season_input = request.args.get("ep_season_input")
 
-    return render_template(
-        "main_results.html",
-        char_name_input=char_name_input,
-        # char_male_input=char_male_input,
-        # char_dead_input=char_dead_input,
-        # char_house_input=char_house_input,
-        # title_name_input=title_name_input,
-        # ep_name_input=ep_name_input,
-        # ep_season_input=ep_season_input
-        )
+    char_id = search_by_name(char_name_input)
 
+
+##################################################
+# Char Routes
+
+
+@app.route("/chars")
+def char_list():
+    """Show list of characters."""
+
+    char_list = Character.query.order_by('char_name').all()
+    return render_template("char_list.html", char_list=char_list)
+
+
+@app.route("/chars/<int:char_id>")
+def char_info(char_id):
+    """Shows char info"""
+
+    char_info = search_by_id(char_id)
+
+    char_name = char_info['char_name']
+    char_male = char_info['char_male']
+    char_dead = char_info['char_dead']
+    char_house = char_info['char_house']
+    char_titles = char_info['char_titles']
+    char_eps = char_info['char_eps']
+
+    return render_template("main_results.html",
+                           char_name_input=char_name_input,
+                           char_id=char_id,
+                           char_male=char_male,
+                           char_dead=char_dead,
+                           char_house=char_house,
+                           char_titles=char_titles,
+                           char_eps=char_eps)
+
+
+##################################################
+# Episode routes
+
+
+@app.route("/eps")
+def ep_list():
+    """Show list of episodes."""
+
+    ep_list = Episode.query.order_by('ep_season').all()
+    return render_template("ep_list.html", ep_list=ep_list)
+
+
+
+@app.route("/eps/<int:ep_id>")
+def ep_info(ep_name):
+    """Shows episode info"""
+
+    ep_name = request.args.get("ep_name")
+
+    ep_id = Episode.query.filter(Episode.ep_name == ep_name).first()
+
+    ep_info = ep_search_by_name(ep_name)
+
+    ep_name = ep_info['ep_name']
+    ep_season = ep_info['ep_season']
+    ep_chars = ep_info['ep_char_ids']
+
+    return render_template("ep_info.html",
+                           ep_name=ep_name,
+                           ep_season=ep_season,
+                           ep_chars=ep_chars)
 
 
 ###########################################
-# Helper Functions
+# Title routes
+
+
+###########################################
+# Helper functions
 
 
 if __name__ == "__main__":

@@ -4,13 +4,13 @@ db = SQLAlchemy()
 from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
 
 ###########################################
-# Search Functions
+# Char searches
 
 
-def search_by_id(char_id):
+def char_search_by_id(char_id):
     """Searches by char_id int, pulls all associated info into a dictionary.
 
-        >>> result = search_by_id(666).items()
+        >>> result = char_search_by_id(666).items()
         >>> result.sort()
         >>> result #doctest: +NORMALIZE_WHITESPACE
         [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'House Morrigen'),
@@ -18,7 +18,7 @@ def search_by_id(char_id):
         ('char_titles', [u'Ser'])]
 
 
-        >>> result = search_by_id(42).items()
+        >>> result = char_search_by_id(42).items()
         >>> result.sort()
         >>> result #doctest: +NORMALIZE_WHITESPACE
         [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'No Affiliation'),
@@ -74,13 +74,13 @@ def search_by_id(char_id):
     return char_info
 
 
-def search_by_name(name):
+def char_search_by_name(name):
     """ Searches by char_name str, returns char_id int.
 
-        >>> search_by_name('Jon Snow')
+        >>> char_search_by_name('Jon Snow')
         925
 
-        >>> search_by_name('Hodor')
+        >>> char_search_by_name('Hodor')
         796
 
     """
@@ -90,10 +90,10 @@ def search_by_name(name):
     return char_obj.char_id
 
 
-def search_by_gender(gender):
+def char_search_by_gender(gender):
     """Searches by char_male (Bool), returns char_ids int list.
 
-        >>> search_by_gender(False) #doctest: +ELLIPSIS
+        >>> char_search_by_gender(False) #doctest: +ELLIPSIS
         [23, 33, 36, 38, 42, 43, 47, ...]
 
     """
@@ -107,14 +107,14 @@ def search_by_gender(gender):
     return sorted(char_id_list)
 
 
-def search_by_dead(dead):
+def char_search_by_dead(dead):
     """Searches by char_dead str ('Totally', 'Not yet', 'Unknown', 'Undead', 'Sorta'),
        returns char_ids int list.
 
-        >>> search_by_dead('Undead')
+        >>> char_search_by_dead('Undead')
         [216, 2035]
 
-        >>> search_by_dead('Sorta')
+        >>> char_search_by_dead('Sorta')
         [925]
 
     """
@@ -128,13 +128,13 @@ def search_by_dead(dead):
     return sorted(char_id_list)
 
 
-def search_by_house(house):
+def char_search_by_house(house):
     """Searches by char_house str, returns char_ids int list.
 
-        >>> search_by_house('House Tarly')
+        >>> char_search_by_house('House Tarly')
         [455, 1481, 1751]
 
-        >>> search_by_house('Brotherhood without banners')
+        >>> char_search_by_house('Brotherhood without banners')
         [111, 432, 676, 834, 981, 1010, 1112, 1218, 1258, 1421, 1781, 1802, 1945]
 
     """
@@ -148,13 +148,13 @@ def search_by_house(house):
     return sorted(char_id_list)
 
 
-def search_by_title(title):
+def char_search_by_title(title):
     """Searches by title_name str, returns char_ids int list.
 
-        >>> search_by_title('Lady')
+        >>> char_search_by_title('Lady')
         [24, 65, 70, 93, 112, 160, 233, 415, 633, 1020, 1170, 1261, 1516, 1650, 1667]
 
-        >>> search_by_title('Protector of the Realm')
+        >>> char_search_by_title('Protector of the Realm')
         [29, 162, 327, 384, 508, 974, 1906]
 
     """
@@ -171,15 +171,15 @@ def search_by_title(title):
     return sorted(char_id_list)
 
 
-def search_by_episode(episode):
+def char_search_by_episode(episode):
     """Searches by ep_name str, returns char_ids int list.
 
-        >>> search_by_episode('Breaker of Chains')  #doctest: +NORMALIZE_WHITESPACE
+        >>> char_search_by_episode('Breaker of Chains')  #doctest: +NORMALIZE_WHITESPACE
         [63, 183, 264, 272, 277, 327, 361, 372, 388, 463, 500, 678, 680, 795,
         796, 850, 852, 925, 937, 1152, 1187, 1231, 1405, 1409, 1425, 1644,
         1648, 1812, 1854]
 
-        >>> search_by_episode('The Night Lands')  #doctest: +NORMALIZE_WHITESPACE
+        >>> char_search_by_episode('The Night Lands')  #doctest: +NORMALIZE_WHITESPACE
         [99, 150, 169, 238, 264, 272, 277, 316, 327, 361, 631, 635, 647, 796,
         803, 848, 875, 925, 1041, 1054, 1152, 1288, 1405, 1413, 1508, 1601, 1644,
         1648, 1668, 1782, 1790, 1812, 1854, 2016]
@@ -198,15 +198,15 @@ def search_by_episode(episode):
     return sorted(char_id_list)
 
 
-def search_by_season(season):
+def char_search_by_season(season):
     """Searches by ep_season int, returns ep_name str list.
 
-        >>> search_by_season(4)  #doctest: +NORMALIZE_WHITESPACE
+        >>> char_search_by_season(4)  #doctest: +NORMALIZE_WHITESPACE
         [u'Breaker of Chains', u'First of His Name', u'Mockingbird', u'Oathkeeper',
         u'The Children', u'The Laws of Gods and Men', u'The Lion and the Rose',
         u'The Mountain and the Viper', u'The Watchers on the Wall', u'Two Swords']
 
-        >>> search_by_season(2)  #doctest: +NORMALIZE_WHITESPACE
+        >>> char_search_by_season(2)  #doctest: +NORMALIZE_WHITESPACE
         [u'A Man Without Honor', u'Blackwater', u'Garden of Bones',
         u'The Ghost of Harrenhal',  u'The Night Lands', u'The North Remembers',
         u'The Old Gods and the New', u'The Prince of Winterfell', u'Valar Morghulis',
@@ -222,6 +222,74 @@ def search_by_season(season):
         ep_name_list.append(ep.ep_name)
 
     return sorted(ep_name_list)
+
+
+##########################################
+# Episode searches
+
+
+def ep_search_by_name(ep_name):
+    """Searches for episode by name str, returns episode info
+
+        >>> result = ep_search_by_name('Breaker of Chains').items()
+        >>> result.sort()
+        >>> result #doctest: +NORMALIZE_WHITESPACE
+        [('char_list', [u'Alliser Thorne', u'Barristan Selmy', u'Bran Stark',
+        u'Brienne of Tarth', u'Bronn', u'Cersei Lannister', u'Craster',
+        u'Daario Naharis', u'Daenerys Targaryen', u'Donnel Locke',
+        u'Eddison Tollett', u'Grenn', u'Grey Worm', u'Hodor', u'Holly',
+        u'Jaime Lannister', u'Janos Slynt', u'Jon Snow', u'Jorah Mormont',
+        u'Margaery Tyrell', u'Meera Reed', u'Missandei', u'Petyr Baelish',
+        u'Podrick Payne', u'Pypar', u'Samwell Tarly', u'Sansa Stark',
+        u'Tommen Baratheon', u'Tyrion Lannister']),
+        ('ep_id', 32), ('ep_name', u'Breaker of Chains'), ('ep_season', 4)]
+
+    """
+
+    ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
+
+    char_id_list = char_search_by_episode(ep_name)
+
+    ep_char_name_list = []
+
+    for char_id in char_id_list:
+        char_info = char_search_by_id(char_id)
+        name = char_info['char_name']
+        ep_char_name_list.append(name)
+
+    ep_info = {}
+
+    ep_info['ep_id'] = ep_obj.ep_id
+    ep_info['ep_name'] = ep_obj.ep_name
+    ep_info['ep_season'] = ep_obj.ep_season
+    ep_info['char_list'] = sorted(ep_char_name_list)
+
+    return ep_info
+
+
+def ep_search_by_season(season):
+    """Searches for season, returns all episodes in that season
+
+        >>> ep_search_by_season(2) #doctest: +NORMALIZE_WHITESPACE
+        [u'A Man Without Honor', u'Blackwater', u'Garden of Bones',
+        u'The Ghost of Harrenhal', u'The Night Lands', u'The North Remembers',
+        u'The Old Gods and the New', u'The Prince of Winterfell', u'Valar Morghulis',
+        u'What Is Dead May Never Die']
+
+    """
+
+    season_eps = Episode.query.filter(Episode.ep_season == season).all()
+
+    ep_names = []
+
+    for ep in season_eps:
+        ep_names.append(ep.ep_name)
+
+    return sorted(ep_names)
+
+
+##########################################
+# Title searches
 
 
 ##########################################
