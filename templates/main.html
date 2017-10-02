@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Search</h1>
+
+<form action="/main_results">
+
+    <div class="form-group">
+        <label>
+            Character name
+            <input type="text" name="char_name_input" class="form-control">
+        </label>
+    </div>
+
+        <div class="form-group">
+        <label>
+            Character gender
+            <input type="dropdown" name="char_male_input" class="form-control">
+        </label>
+    </div>
+
+        <div class="form-group">
+        <label>
+            Character alive?
+            <input type="dropdpown" name="char_dead_input" class="form-control">
+        </label>
+    </div>
+
+        <div class="form-group">
+        <label>
+            Character titles
+            <input type="text" name="title_name_input" class="form-control">
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            Character house
+            <input type="text" name="char_house_input" class="form-control">
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            Episode
+            <input type="text" name="ep_name_input" class="form-control">
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            Season
+            <input type="number" name="ep_season_input" class="form-control">
+        </label>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="GYGO!" class="btn btn-danger">
+    </div>
+
+</form>
+
+{% endblock %}
