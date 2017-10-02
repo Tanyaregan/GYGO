@@ -228,10 +228,10 @@ def char_search_by_season(season):
 # Episode searches
 
 
-def ep_search_by_name(ep_name):
-    """Searches for episode by name str, returns episode info
+def ep_search_by_id(ep_id):
+    """Searches for episode by id, returns episode info
 
-        >>> result = ep_search_by_name('Breaker of Chains').items()
+        >>> result = ep_search_by_id(32).items()
         >>> result.sort()
         >>> result #doctest: +NORMALIZE_WHITESPACE
         [('char_list', [u'Alliser Thorne', u'Barristan Selmy', u'Bran Stark',
@@ -246,9 +246,9 @@ def ep_search_by_name(ep_name):
 
     """
 
-    ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
+    ep_obj = Episode.query.filter(Episode.ep_id == ep_id).first()
 
-    char_id_list = char_search_by_episode(ep_name)
+    char_id_list = char_search_by_episode(ep_obj.ep_name)
 
     ep_char_name_list = []
 

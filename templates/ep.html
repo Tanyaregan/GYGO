@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam ep detail page.
+<br><br>
+
+The ep id is:
+{{ ep_id }}
+<br><br>
+
+The ep name is:
+{{ ep_name }}
+<br><br>
+
+This ep had the following chars:
+
+<ul>
+  {% for char in char_list %}
+    <li> {{ char }}
+</ul>
+{% endfor %}
+<br><br>
+
+{% endblock %}
