@@ -19,6 +19,48 @@ app.secret_key = "SEEKRIT"
 
 app.jinja_env.undefined = StrictUndefined
 
+###########################################
+# Routes
+
+
+@app.route('/')
+def index():
+    """Index."""
+
+    return render_template("index.html")
+
+
+@app.route('/main')
+def main_page():
+    """Main page, shows search form"""
+
+    return render_template("main.html")
+
+
+@app.route('/main_results')
+def main_results():
+    """Show results from main.html search"""
+
+    char_name_input = request.args.get("char_name_input")
+    # char_male_input = request.args.get("char_male_input")
+    # char_dead_input = request.args.get("char_dead_input")
+    # char_house_input = request.args.get("char_house_input")
+    # title_name_input = request.args.get("title_name_input")
+    # ep_name_input = request.args.get("ep_name_input")
+    # ep_season_input = request.args.get("ep_season_input")
+
+    return render_template(
+        "main_results.html",
+        char_name_input=char_name_input,
+        # char_male_input=char_male_input,
+        # char_dead_input=char_dead_input,
+        # char_house_input=char_house_input,
+        # title_name_input=title_name_input,
+        # ep_name_input=ep_name_input,
+        # ep_season_input=ep_season_input
+        )
+
+
 
 ###########################################
 # Helper Functions
