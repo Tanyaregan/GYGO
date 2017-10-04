@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam title detail page.
+<br><br>
+
+The title id is:
+{{ title_id }}
+<br><br>
+
+The title name is:
+{{ title_name }}
+<br><br>
+
+
+This title has been given to the following chars:
+<ul>
+  {% for char in chars_with_title %}
+    <li>
+      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+    </li>
+</ul>
+{% endfor %}
+<br><br>
+
+{% endblock %}

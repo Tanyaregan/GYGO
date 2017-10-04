@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam house detail page.
+<br><br>
+
+The house name is:
+{{ house_name }}
+<br><br>
+
+
+The following characters are in this house:
+<ul>
+  {% for char in char_house_list %}
+    <li>
+      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+    </li>
+</ul>
+{% endfor %}
+<br><br>
+
+{% endblock %}

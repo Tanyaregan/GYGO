@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam house list page
+
+  <h2>Houses</h2>
+  <ul>
+  {% for house in house_list %}
+    <li>
+      <a href="/houses/{{ house }}">{{ house }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+
+
+{% endblock %}
