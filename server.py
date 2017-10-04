@@ -6,11 +6,11 @@ from flask import Flask, jsonify, render_template, redirect, request, flash, ses
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
+from model import db, connect_to_db, Character, Title, Episode, House, CharTitle, CharEp, CharHouse
 
 from search_queries import char_search_by_multiple_args, char_search_by_id
-from search_queries import ep_search_by_id
-
+from search_queries import char_search_by_house
+from search_queries import ep_search_by_id, title_search_by_id
 
 app = Flask(__name__)
 
@@ -42,17 +42,20 @@ def results():
 
     multi_arg_dict = {}
 
+# Look up syntax Params in args.get
+
     multi_arg_dict['char_name'] = request.args.get("char_name")
     multi_arg_dict["char_male"] = request.args.get("char_male")
     multi_arg_dict["char_dead"] = request.args.get("char_dead")
     multi_arg_dict["char_house"] = request.args.get("char_house")
 
-    print multi_arg_dict
-
     list_of_chars = char_search_by_multiple_args(multi_arg_dict)
 
-    return render_template('results.html', list_of_chars=list_of_chars)
-
+    for char in list_of_chars:
+        if len(list_of_chars) == 1:
+            return redirect("/chars/%d" % (char.char_id))
+        else:
+            return render_template('results.html', list_of_chars=list_of_chars)
 
 ##################################################
 # Char Routes
@@ -68,8 +71,8 @@ def char_list():
 
 
 @app.route("/chars/<int:char_id>")
-def char_info(char_id):
-    """Shows char info"""
+def char_details(char_id):
+    """Shows char details"""
 
     char_info = char_search_by_id(char_id)
 
@@ -81,7 +84,6 @@ def char_info(char_id):
                            char_house=char_info['char_house'],
                            char_titles=char_info['char_titles'],
                            char_eps=char_info['char_eps'])
-
 
 ##################################################
 # Episode routes
@@ -97,8 +99,8 @@ def ep_list():
 
 
 @app.route("/eps/<int:ep_id>")
-def ep_info(ep_id):
-    """Shows episode info"""
+def ep_details(ep_id):
+    """Shows episode details"""
 
     ep_info = ep_search_by_id(ep_id)
 
@@ -108,10 +110,58 @@ def ep_info(ep_id):
                            ep_season=ep_info['ep_season'],
                            char_list=ep_info['char_list'])
 
+###########################################
+# Title routes
+
+
+@app.route("/titles")
+def title_list():
+    """Show list of titles."""
+
+    title_list = Title.query.order_by('title_name').all()
+
+    return render_template("title_list.html", title_list=title_list)
+
+
+@app.route("/titles/<int:title_id>")
+def title_details(title_id):
+    """Shows title details"""
+
+    chars_with_title = title_search_by_id(title_id)
+
+    title_obj = Title.query.filter(Title.title_id == title_id).first()
+    title_name = title_obj.title_name
+
+    return render_template("title.html",
+                           title_id=title_id,
+                           title_name=title_name,
+                           chars_with_title=chars_with_title)
 
 ###########################################
 # House routes
 
+
+# @app.route("/houses")
+# def house_list():
+#     """Show list of houses."""
+
+# #     query = session.query(Class.title.distinct().label("title"))
+# # titles = [row.title for row in query.all()]
+
+#     house_list = db.session.query(Character.char_house.distinct())
+
+#     return render_template("house_list.html", house_list=house_list)
+
+
+# @app.route("/houses/<int:house_name>")
+# def house_details(char_house):
+#     """Shows house details"""
+
+#     char_house_list = char_search_by_house(char_house)
+
+#     return render_template("house.html",
+#                            char_house=char_house,
+#                            char_house_list=char_house_list)
 
 ###########################################
 # Helper functions

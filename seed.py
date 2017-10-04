@@ -4,7 +4,7 @@ import json
 
 from sqlalchemy import func
 
-from model import Character, Title, Episode, CharTitle, CharEp
+from model import Character, Title, Episode, House, CharTitle, CharEp, CharHouse
 from model import connect_to_db, db
 
 from server import app
@@ -85,6 +85,31 @@ def load_episodes():
 
     db.session.commit()
 
+
+def load_houses():
+    """Load houses from seed_data/characters into database."""
+
+    print "Houses..."
+
+    House.query.delete()
+
+    json_string = open("./seed_data/chars.json").read()
+    chars_dict = json.loads(json_string)
+
+    house_set = set()
+
+    for char in chars_dict:
+        for house in char.get('house'):
+            house_set.add(house)
+
+    for house_name in house_set:
+
+        house = House(house_name=house_name)
+
+        db.session.add(house)
+
+    db.session.commit()
+
 ###############################################
 # Load Associative Tables
 
@@ -130,7 +155,7 @@ def load_char_title():
 def load_char_episodes():
     """Load associative table with Character IDs and Episodes."""
 
-    print "Episode-Characters..."
+    print "Character-Episodes..."
 
     CharEp.query.delete()
 
@@ -156,6 +181,29 @@ def load_char_episodes():
     db.session.commit()
 
 
+def load_char_houses():
+    """Load associative table with Character IDs and Houses."""
+
+    print "Character-Houses..."
+
+    CharHouse.query.delete()
+
+    json_string = open("./seed_data/chars.json").read()
+    char_house_dict = json.loads(json_string)
+
+    for char_obj in char_house_dict:
+
+        char_id = char_obj.char_id
+
+        house_name = char_obj['char_house']
+        house_obj = House.query.filter(House.house_name == house_name).first()
+        house_id = house_obj.house_id
+
+        char_house = CharHouse(char_id=char_id,
+                               house_id=house_id)
+
+        db.session.add(char_house)
+
 ##################################################
 
 if __name__ == "__main__":
@@ -165,9 +213,11 @@ if __name__ == "__main__":
     db.create_all()
 
 
-# load_characters()
-# load_titles()
-# load_episodes()
+load_characters()
+load_titles()
+load_episodes()
+load_houses()
 
 # load_char_title()
 # load_char_episodes()
+# load_char_houses()

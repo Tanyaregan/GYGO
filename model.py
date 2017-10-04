@@ -57,6 +57,19 @@ class Episode(db.Model):
                                                             self.ep_name)
 
 
+class House(db.Model):
+    """Houses"""
+
+    __tablename__ = "houses"
+
+    house_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    house_name = db.Column(db.String(200))
+
+    def __repr__(self):
+        return "<house_id=%d house_name=%s>" % (self.house_id,
+                                                self.house_name)
+
+
 class CharTitle(db.Model):
     """Titles and Characters."""
 
@@ -86,6 +99,20 @@ class CharEp(db.Model):
                                                        self.char_id,
                                                        self.ep_id)
 
+
+class CharHouse(db.Model):
+    """Houses and Characters"""
+
+    __tablename__ = "char_house"
+
+    charhouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'))
+    house_id = title_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'))
+
+    def __repr__(self):
+        return "<charep_id=%d char_id=%s ep_id=%s>" % (self.charhouse_id,
+                                                       self.char_id,
+                                                       self.house_id)
 
 ##############################################################################
 # Helper functions
