@@ -1,5 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+# from flask_sqlalchemy import SQLAlchemy
 
 from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
 
@@ -224,6 +223,54 @@ def char_search_by_season(season):
     return sorted(ep_name_list)
 
 
+def char_search_by_multiple_args(multi_arg_dict):
+    """Searches by arg dict passed from search page, returns list of char objects
+
+        >>> char_search_by_multiple_args({'char_dead':'None', 'char_name':'None','char_house':'House Martell', 'char_male':'False'}) #doctest: +NORMALIZE_WHITESPACE
+        [<char_id=1052 name=Loreza Sand male=False house=House Martell dead=Totally>,
+         <char_id=1320 name=Obara Sand male=False house=House Martell dead=Totally>,
+         <char_id=128 name=Arianne Martell male=False house=House Martell dead=Totally>,
+         <char_id=1137 name=Manfrey Martell male=False house=House Martell dead=Totally>,
+         <char_id=1249 name=Morra male=False house=House Martell dead=Totally>,
+         <char_id=1252 name=Mors Martell male=False house=House Martell dead=Totally>,
+         <char_id=186 name=Belandra male=False house=House Martell dead=Totally>,
+         <char_id=309 name=Cedra male=False house=House Martell dead=Totally>,
+         <char_id=476 name=Dorea Sand male=False house=House Martell dead=Totally>,
+         <char_id=528 name=Elia Martell male=False house=House Martell dead=Totally>,
+         <char_id=525 name=Elia Sand male=False house=House Martell dead=Totally>,
+         <char_id=620 name=Gascoyne male=False house=House Martell dead=Totally>,
+         <char_id=1202 name=Mellei male=False house=House Martell dead=Totally>,
+         <char_id=1314 name=Nymeria male=False house=House Martell dead=Totally>,
+         <char_id=1318 name=Nymeria Sand male=False house=House Martell dead=Totally>,
+         <char_id=1319 name=Obella Sand male=False house=House Martell dead=Totally>,
+         <char_id=1527 name=Ricasso male=False house=House Martell dead=Totally>,
+         <char_id=1646 name=Sarella Sand male=False house=House Martell dead=Totally>,
+         <char_id=1843 name=Tyene Sand male=False house=House Martell dead=Totally>]
+
+        >>> char_search_by_multiple_args({'char_dead':'Undead'}) #doctest: +NORMALIZE_WHITESPACE
+        [<char_id=2035 name=Viserion (Dragon) male=True house=House Targaryen dead=Undead>,
+        <char_id=216 name=Benjen Stark male=True house=House Stark dead=Undead>]
+    """
+
+    # Makes new dict removing anything that has None
+
+    arg_dict = {}
+
+    for arg, value in multi_arg_dict.items():
+        if value == 'None' or not value:
+            pass
+        else:
+            arg_dict[arg] = value
+
+    # Passes list of 1-4 items into query, returns list of char objects
+
+    list_of_chars = Character.query.filter_by(**arg_dict).all()
+
+    return sorted(list_of_chars)
+
+# multi_arg_dict = {'char_house':'House Martell'}
+
+
 ##########################################
 # Episode searches
 
@@ -289,7 +336,7 @@ def ep_search_by_season(season):
 
 
 ##########################################
-# Title searches
+# House searches
 
 
 ##########################################

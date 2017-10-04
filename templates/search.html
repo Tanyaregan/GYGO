@@ -2,61 +2,43 @@
 {% block content %}
 
 <h1>Search</h1>
+<br>
+Fill out at least one search term.
+<br><br>
 
-<form action="/main_results">
+<form action="/results">
 
-    <div class="form-group">
-        <label>
-            Character name
-            <input type="text" name="char_name_input" class="form-control">
-        </label>
-    </div>
+Character name:
+<input type="text" name="char_name" maxlength="100" size="60"
+placeholder="Character name">
+<br><br>
 
-        <div class="form-group">
-        <label>
-            Character gender
-            <input type="dropdown" name="char_male_input" class="form-control">
-        </label>
-    </div>
+Character gender:
+<select name="char_male">
+  <option value="None">Not specified</option>
+  <option value="True">Male</option>
+  <option value="False">Female</option>
 
-        <div class="form-group">
-        <label>
-            Character alive?
-            <input type="dropdpown" name="char_dead_input" class="form-control">
-        </label>
-    </div>
+</select>
+<br><br>
 
-        <div class="form-group">
-        <label>
-            Character titles
-            <input type="text" name="title_name_input" class="form-control">
-        </label>
-    </div>
+Character alive:
+<select name="char_dead">
+    <option value="None" selected>Not specified</option>
+    <option value="Unknown">Unknown</option>
+    <option value="Not yet..">Not yet..</option>
+    <option value="Totally">Totally</option>
+    <option value="Sorta">Sorta</option>
+    <option value="Undead">Undead</option>
+</select>
+<br><br>
 
-    <div class="form-group">
-        <label>
-            Character house
-            <input type="text" name="char_house_input" class="form-control">
-        </label>
-    </div>
+Character house:
+<input type="text" name="char_house" size="60" maxlength="100"
+placeholder="House name">
+<br><br>
 
-    <div class="form-group">
-        <label>
-            Episode
-            <input type="text" name="ep_name_input" class="form-control">
-        </label>
-    </div>
-
-    <div class="form-group">
-        <label>
-            Season
-            <input type="number" name="ep_season_input" class="form-control">
-        </label>
-    </div>
-
-    <div class="form-group">
-        <input type="submit" value="GYGO!" class="btn btn-danger">
-    </div>
+<input type="submit" value="GYGO!">
 
 </form>
 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam results page.
+<br><br>
+
+These characters met your search criteria:
+  <ul>
+  {% for char in list_of_chars %}
+    <li>
+      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+
+{% endblock %}
