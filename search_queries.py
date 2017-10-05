@@ -1,4 +1,4 @@
-from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp
+from model import connect_to_db, Character, Title, Episode, CharTitle, CharEp, House, CharHouse
 
 ###########################################
 # Char searches
@@ -31,8 +31,15 @@ def char_search_by_id(char_id):
     char_id = char_obj.char_id
     char_name = char_obj.char_name
     char_male = char_obj.char_male
-    char_house = char_obj.char_house
     char_dead = char_obj.char_dead
+
+    # House:
+
+    house_list_obj = CharHouse.query.filter(CharHouse.char_id == char_id).all()
+    house_id = house_list_obj.house_id
+
+    house_obj = House.query.filter(House.house_id == house_id.first())
+    char_house = house_obj.house_name
 
     # Title list:
 
@@ -97,16 +104,15 @@ def char_search_by_episode(episode):
 def char_search_by_multiple_args(multi_arg_dict):
     """Searches by arg dict passed from search page, returns list of char objects
 
-        >>> char_search_by_multiple_args({'char_dead':'None', 'char_name':'None',
-        ... 'char_house':'House Martell', 'char_male':'False'})
+        >>> char_search_by_multiple_args({'char_dead':'None', 'char_name':'None', 'char_male':'False'})
         ... #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
-        [<char_id=1052 name=Loreza Sand male=False house=House Martell dead=Totally>, ...
-         <char_id=1843 name=Tyene Sand male=False house=House Martell dead=Totally>]
+        [<char_id=1052 name=Loreza Sand male=False dead=Totally>, ...
+         <char_id=1843 name=Tyene Sand male=False dead=Totally>]
 
         >>> char_search_by_multiple_args({'char_dead':'Undead'})
         ... #doctest: +NORMALIZE_WHITESPACE
-        [<char_id=2035 name=Viserion (Dragon) male=True house=House Targaryen dead=Undead>,
-        <char_id=216 name=Benjen Stark male=True house=House Stark dead=Undead>]
+        [<char_id=2035 name=Viserion (Dragon) male=True dead=Undead>,
+        <char_id=216 name=Benjen Stark male=True dead=Undead>]
     """
 
     # Makes new dict removing anything that has None/blank
@@ -119,7 +125,7 @@ def char_search_by_multiple_args(multi_arg_dict):
         else:
             arg_dict[arg] = value
 
-    # Passes list of 1-4 items into query, returns list of char objects
+    # Passes list of 1-3 items into query, returns list of char objects
 
     list_of_chars = Character.query.filter_by(**arg_dict).all()
 

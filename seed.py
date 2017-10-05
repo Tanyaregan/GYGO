@@ -27,12 +27,10 @@ def load_characters():
     for char in chars_dict:
         char_name = char['name']
         char_male = char['male']
-        char_house = char.get('house', 'NULL')
 
         char = Character(char_name=char_name,
                          char_male=char_male,
-                         char_house=char_house,
-                         char_dead="Not yet..")
+                         char_dead="Unknown")
 
         db.session.add(char)
 
@@ -99,8 +97,8 @@ def load_houses():
     house_set = set()
 
     for char in chars_dict:
-        for house in char.get('house'):
-            house_set.add(house)
+        house = char.get('house')
+        house_set.add(house)
 
     for house_name in house_set:
 
@@ -141,10 +139,10 @@ def load_char_title():
 
                 title_id = title_obj.title_id
 
-                char_title = CharTitle(char_id=char_id,
-                                       title_id=title_id)
+                char_titles = CharTitle(char_id=char_id,
+                                        title_id=title_id)
 
-                db.session.add(char_title)
+                db.session.add(char_titles)
 
         else:
             pass
@@ -173,10 +171,10 @@ def load_char_episodes():
                 ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
                 ep_id = ep_obj.ep_id
 
-                char_ep = CharEp(char_id=char_id,
-                                 ep_id=ep_id)
+                char_eps = CharEp(char_id=char_id,
+                                  ep_id=ep_id)
 
-                db.session.add(char_ep)
+                db.session.add(char_eps)
 
     db.session.commit()
 
@@ -191,33 +189,36 @@ def load_char_houses():
     json_string = open("./seed_data/chars.json").read()
     char_house_dict = json.loads(json_string)
 
-    for char_obj in char_house_dict:
+    for char in char_house_dict:
 
-        char_id = char_obj.char_id
-
-        house_name = char_obj['char_house']
+        house_name = char.get('house', 'No Affiliation')
         house_obj = House.query.filter(House.house_name == house_name).first()
         house_id = house_obj.house_id
 
-        char_house = CharHouse(char_id=char_id,
-                               house_id=house_id)
+        char_name = char['name']
+        char_obj = Character.query.filter(Character.char_name == char_name).first()
+        char_id = char_obj.char_id
 
-        db.session.add(char_house)
+        char_houses = CharHouse(char_id=char_id,
+                                house_id=house_id)
+
+        db.session.add(char_houses)
+
+    db.session.commit()
 
 ##################################################
 
 if __name__ == "__main__":
     connect_to_db(app)
 
-    # In case tables haven't been created, create them
     db.create_all()
 
 
-load_characters()
-load_titles()
-load_episodes()
-load_houses()
+# load_characters()
+# load_titles()
+# load_episodes()
+# load_houses()
 
 # load_char_title()
-# load_char_episodes()
+# # load_char_episodes()
 # load_char_houses()

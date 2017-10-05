@@ -15,11 +15,11 @@ class Character(db.Model):
     char_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     char_name = db.Column(db.String(100), nullable=False, unique=True)
     char_male = db.Column(db.Boolean)
-    char_house = db.Column(db.String(100))
     char_dead = db.Column(db.String(50))
 
     r_title = db.relationship("Title", backref="titles", secondary="char_titles")
-    r_episode = db.relationship("Episode", backref="episodes", secondary="char_ep")
+    r_episode = db.relationship("Episode", backref="episodes", secondary="char_eps")
+    r_house = db.relationship("House", backref="houses", secondary="char_houses")
 
     def __repr__(self):
         return "<char_id=%d name=%s male=%s house=%s dead=%s>" % (self.char_id,
@@ -88,7 +88,7 @@ class CharTitle(db.Model):
 class CharEp(db.Model):
     """Episodes and Characters."""
 
-    __tablename__ = "char_ep"
+    __tablename__ = "char_eps"
 
     charep_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'))
@@ -103,11 +103,11 @@ class CharEp(db.Model):
 class CharHouse(db.Model):
     """Houses and Characters"""
 
-    __tablename__ = "char_house"
+    __tablename__ = "char_houses"
 
     charhouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     char_id = db.Column(db.Integer, db.ForeignKey('characters.char_id'))
-    house_id = title_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'))
+    house_id = db.Column(db.Integer, db.ForeignKey('houses.house_id'))
 
     def __repr__(self):
         return "<charep_id=%d char_id=%s ep_id=%s>" % (self.charhouse_id,

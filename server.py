@@ -47,7 +47,6 @@ def results():
     multi_arg_dict['char_name'] = request.args.get("char_name")
     multi_arg_dict["char_male"] = request.args.get("char_male")
     multi_arg_dict["char_dead"] = request.args.get("char_dead")
-    multi_arg_dict["char_house"] = request.args.get("char_house")
 
     list_of_chars = char_search_by_multiple_args(multi_arg_dict)
 
