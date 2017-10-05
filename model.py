@@ -25,7 +25,6 @@ class Character(db.Model):
         return "<char_id=%d name=%s male=%s house=%s dead=%s>" % (self.char_id,
                                                                   self.char_name,
                                                                   self.char_male,
-                                                                  self.char_house,
                                                                   self.char_dead)
 
 
