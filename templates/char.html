@@ -4,12 +4,12 @@
 Hallo I yam char page.
 <br><br>
 
-Char name :
-{{ char_name }}
-<br><br>
-
 Char id :
 {{ char_id }}
+<br><br>
+
+Char name :
+{{ char_name }}
 <br><br>
 
 Is this char male?:
@@ -21,24 +21,25 @@ Is this char dead?:
 <br><br>
 
 Char house is:
-{{ char_house }}
+<a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
 <br><br>
 
 Titles:
-<ul>
+  <ul>
   {% for title in char_titles %}
-   <li> {{ title }}
-</ul>
-{% endfor %}
-<br><br>
+    <li>
+      <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
+    </li>
+  {% endfor %}
+  </ul>
 
 Episodes:
 <ul>
   {% for ep in char_eps %}
-    <li> {{ ep }}
+    <li>
+      <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+    </li>
+  {% endfor %}
 </ul>
-{% endfor %}
-<br><br>
-
 
 {% endblock %}

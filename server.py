@@ -10,7 +10,7 @@ from model import db, connect_to_db, Character, Title, Episode, House, CharTitle
 
 from search_queries import char_search_by_multiple_args, char_search_by_id
 from search_queries import char_search_by_house
-from search_queries import ep_search_by_id, title_search_by_id
+from search_queries import ep_search_by_id, title_search_by_name
 
 app = Flask(__name__)
 
@@ -42,21 +42,23 @@ def results():
 
     multi_arg_dict = {}
 
-# Look up syntax Params in args.get
-
     multi_arg_dict['char_name'] = request.args.get("char_name")
     multi_arg_dict["char_male"] = request.args.get("char_male")
     multi_arg_dict["char_dead"] = request.args.get("char_dead")
 
+    list_of_char_ids = char_search_by_multiple_args(multi_arg_dict)
+    list_of_chars = []
 
+    for char_id in list_of_char_ids:
+        char_obj = char_search_by_id(char_id)
 
-    list_of_chars = char_search_by_multiple_args(multi_arg_dict)
+        if len(list_of_char_ids) == 1:
+            return redirect("/chars/%d" % (char_obj['char_id']))
 
-    for char in list_of_chars:
-        if len(list_of_chars) == 1:
-            return redirect("/chars/%d" % (char.char_id))
         else:
-            return render_template('results.html', list_of_chars=list_of_chars)
+            list_of_chars.append(char_obj)
+
+    return render_template('results.html', list_of_chars=list_of_chars)
 
 ##################################################
 # Char Routes
@@ -82,9 +84,9 @@ def char_details(char_id):
                            char_id=char_info['char_id'],
                            char_male=char_info['char_male'],
                            char_dead=char_info['char_dead'],
-                           char_house=char_info['char_house'],
-                           char_titles=char_info['char_titles'],
-                           char_eps=char_info['char_eps'])
+                           char_house=char_info['house_obj'],
+                           char_titles=char_info['title_objs'],
+                           char_eps=char_info['ep_objs'])
 
 ##################################################
 # Episode routes
@@ -176,5 +178,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     DebugToolbarExtension(app)
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     app.run(port=5000, host='0.0.0.0')

@@ -8,12 +8,6 @@ from model import CharEp, House, CharHouse
 def char_search_by_id(char_id):
     """Searches by char_id int, pulls all associated info into a dictionary.
 
-    >>> result = char_search_by_id(42).items()
-    >>> result.sort()
-    >>> result #doctest: +NORMALIZE_WHITESPACE
-    [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'No Affiliation'),
-    ('char_id', 42), ('char_male', False), ('char_name', u'Alaric of Eysen'),
-    ('char_titles', [])]
 
     """
 
@@ -32,29 +26,28 @@ def char_search_by_id(char_id):
     house_id = charhouse_obj.house_id
 
     house_obj = House.query.filter(House.house_id == house_id).first()
-    char_house = house_obj.house_name
 
     # Title list:
 
     title_list_obj = CharTitle.query.filter(CharTitle.char_id == char_id).all()
 
-    char_titles = []
+    title_objs = []
 
     for title in title_list_obj:
         title_num = title.title_id
-        title = Title.query.filter(Title.title_id == title_num).first()
-        char_titles.append(title.title_name)
+        title_obj = Title.query.filter(Title.title_id == title_num).first()
+        title_objs.append(title_obj)
 
     # Episode list:
 
     ep_list_obj = CharEp.query.filter(CharEp.char_id == char_id).all()
 
-    char_eps = []
+    ep_objs = []
 
     for ep in ep_list_obj:
         ep_num = ep.ep_id
-        ep = Episode.query.filter(Episode.ep_id == ep_num).first()
-        char_eps.append(ep.ep_name)
+        ep_obj = Episode.query.filter(Episode.ep_id == ep_num).first()
+        ep_objs.append(ep_obj)
 
     # Populate info dictionary:
 
@@ -64,9 +57,9 @@ def char_search_by_id(char_id):
     char_info['char_name'] = char_name
     char_info['char_male'] = char_male
     char_info['char_dead'] = char_dead
-    char_info['char_house'] = char_house
-    char_info['char_titles'] = char_titles
-    char_info['char_eps'] = char_eps
+    char_info['house_obj'] = house_obj
+    char_info['title_objs'] = title_objs
+    char_info['ep_objs'] = ep_objs
 
     return char_info
 
@@ -95,12 +88,12 @@ def char_search_by_episode(episode):
 
 
 def char_search_by_multiple_args(multi_arg_dict):
-    """Searches by arg dict passed from search page, returns list of char objects
+    """Searches by arg dict passed from search page, returns list of char ids
 
         >>> char_search_by_multiple_args({'char_dead':'Totally',
         ... 'char_name':'None', 'char_male':'False'})
         ... #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
-        [174, 316, 473, 476,... 1668, 1683, 1746, 1755, 1843, 1888, 2011]
+        [174, 316, 473, 476,... 1755, 1843, 1888, 2011]
 
         >>> char_search_by_multiple_args({'char_dead':'Undead'})
         [2029]
