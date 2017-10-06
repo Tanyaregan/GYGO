@@ -15,7 +15,7 @@ The title name is:
 
 This title has been given to the following chars:
 <ul>
-  {% for char in chars_with_title %}
+  {% for char in char_objs_with_title %}
     <li>
       <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
     </li>

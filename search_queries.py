@@ -64,29 +64,6 @@ def char_search_by_id(char_id):
     return char_info
 
 
-def char_search_by_episode(episode):
-    """Searches by ep_name str, returns char_ids int list.
-
-        >>> char_search_by_episode('Breaker of Chains')  #doctest: +ELLIPSIS
-        [63, 183, 264, 272, 277, 327, 361, ... 1812, 1854]
-
-        >>> char_search_by_episode('The Night Lands')  #doctest: +ELLIPSIS
-        [99, 150, 169, 238, 264, 272, 277, ... 1854, 2016]
-
-    """
-
-    ep_obj = Episode.query.filter(Episode.ep_name == episode).first()
-
-    charep_obj_list = CharEp.query.filter(CharEp.ep_id == ep_obj.ep_id).all()
-
-    char_id_list = []
-
-    for obj in charep_obj_list:
-        char_id_list.append(obj.char_id)
-
-    return sorted(char_id_list)
-
-
 def char_search_by_multiple_args(multi_arg_dict):
     """Searches by arg dict passed from search page, returns list of char ids
 
@@ -123,7 +100,7 @@ def char_search_by_multiple_args(multi_arg_dict):
 
 
 ##########################################
-# Episode searches
+# Episode search
 
 
 def ep_search_by_id(ep_id):
@@ -140,46 +117,40 @@ def ep_search_by_id(ep_id):
 
     ep_obj = Episode.query.filter(Episode.ep_id == ep_id).first()
 
-    char_id_list = char_search_by_episode(ep_obj.ep_name)
+    char_id_list = CharEp.query.filter(CharEp.ep_id == ep_id).all()
 
-    ep_char_name_list = []
+    ep_char_obj_list = []
 
-    for char_id in char_id_list:
-        char_info = char_search_by_id(char_id)
-        name = char_info['char_name']
-        ep_char_name_list.append(name)
+    for obj in char_id_list:
+        char_id = obj.char_id
+        char_obj = Character.query.filter(Character.char_id == char_id).first()
+        ep_char_obj_list.append(char_obj)
 
     ep_info = {}
 
     ep_info['ep_id'] = ep_obj.ep_id
     ep_info['ep_name'] = ep_obj.ep_name
     ep_info['ep_season'] = ep_obj.ep_season
-    ep_info['char_list'] = sorted(ep_char_name_list)
+    ep_info['char_list'] = sorted(ep_char_obj_list)
 
     return ep_info
 
 
 ##########################################
-# Title searches
+# Title search
 
 
-def title_search_by_name(title_name):
-    """Searches by title_name str, returns char_ids int list.
-
-        >>> title_search_by_name('Lady')
-        [24, 65, 70, 93, 112, 160, 233, 415, 633, 1020, 1170, 1261, 1516, 1650, 1667]
-
-        >>> title_search_by_name('King')
-        [557, 1674]
+def title_search_by_id(title_id):
+    """Searches by title_id int, returns char_ids int list.
 
     """
-    title_obj = Title.query.filter(Title.title_name == title_name).first()
+    title_obj = Title.query.filter(Title.title_id == title_id).first()
 
     title_id = title_obj.title_id
 
-    chartitle_obj_list = CharTitle.query.filter(CharTitle.title_id == title_id).all()
-
     chars_with_title = []
+
+    chartitle_obj_list = CharTitle.query.filter(CharTitle.title_id == title_id).all()
 
     for obj in chartitle_obj_list:
         char_id = obj.char_id
@@ -189,29 +160,27 @@ def title_search_by_name(title_name):
 
 
 ##########################################
-# House searches
+# House search
 
 
-def char_search_by_house(house_name):
-    """Searches by char_house str, returns char_ids int list.
-
-        >>> char_search_by_house('Tarly')
-        [455, 1481, 1751]
+def char_search_by_house(house_id):
+    """Searches by house_id int, returns ep info and char_ids int list.
 
     """
 
-    house_char_obj = House.query.filter(House.house_name == house_name).first()
-    house_id = house_char_obj.house_id
+    house_obj = House.query.filter(House.house_id == house_id).first()
 
-    house_char_list = []
+    house_id = house_obj.house_id
+
+    house_char_obj_list = []
 
     house_char_objs = CharHouse.query.filter(CharHouse.house_id == house_id).all()
 
-    for char in house_char_objs:
-        char_id = char.char_id
-        house_char_list.append(char_id)
+    for obj in house_char_objs:
+        char_obj = Character.query.filter(Character.char_id == obj.char_id).first()
+        house_char_obj_list.append(char_obj)
 
-    return sorted(house_char_list)
+    return sorted(house_char_obj_list)
 
 
 ##########################################
@@ -277,3 +246,27 @@ if __name__ == "__main__":
 #         ep_names.append(ep.ep_name)
 
 #     return sorted(ep_names)
+
+
+
+# def char_search_by_episode(ep_name):
+#     """Searches by ep_name str, returns char_ids int list.
+
+#         >>> char_search_by_episode('Breaker of Chains')  #doctest: +ELLIPSIS
+#         [63, 183, 264, 272, 277, 327, 361, ... 1812, 1854]
+
+#         >>> char_search_by_episode('The Night Lands')  #doctest: +ELLIPSIS
+#         [99, 150, 169, 238, 264, 272, 277, ... 1854, 2016]
+
+#     """
+
+#     ep_obj = Episode.query.filter(Episode.ep_name == ep_name).first()
+
+#     charep_obj_list = CharEp.query.filter(CharEp.ep_id == ep_obj.ep_id).all()
+
+#     char_obj_list = []
+
+#     for obj in charep_obj_list:
+#         char_obj_list.append(obj)
+
+#     return sorted(char_obj_list)

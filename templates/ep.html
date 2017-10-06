@@ -19,9 +19,12 @@ The ep season is:
 This ep had the following chars:
 <ul>
   {% for char in char_list %}
-    <li> {{ char }}
+    <li>
+      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+    </li>
 </ul>
 {% endfor %}
 <br><br>
+
 
 {% endblock %}

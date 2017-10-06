@@ -7,7 +7,7 @@ Hallo I yam house list page
   <ul>
   {% for house in house_list %}
     <li>
-      <a href="/houses/{{ house }}">{{ house }}</a>
+      <a href="/houses/{{ house.house_id }}">{{ house.house_name }}</a>
     </li>
   {% endfor %}
   </ul>

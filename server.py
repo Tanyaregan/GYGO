@@ -10,7 +10,7 @@ from model import db, connect_to_db, Character, Title, Episode, House, CharTitle
 
 from search_queries import char_search_by_multiple_args, char_search_by_id
 from search_queries import char_search_by_house
-from search_queries import ep_search_by_id, title_search_by_name
+from search_queries import ep_search_by_id, title_search_by_id
 
 app = Flask(__name__)
 
@@ -92,7 +92,7 @@ def char_details(char_id):
 # Episode routes
 
 
-@app.route("/eps")
+@app.route("/episodes")
 def ep_list():
     """Show list of episodes."""
 
@@ -101,7 +101,7 @@ def ep_list():
     return render_template("ep_list.html", ep_list=ep_list)
 
 
-@app.route("/eps/<int:ep_id>")
+@app.route("/episodes/<int:ep_id>")
 def ep_details(ep_id):
     """Shows episode details"""
 
@@ -112,6 +112,32 @@ def ep_details(ep_id):
                            ep_name=ep_info['ep_name'],
                            ep_season=ep_info['ep_season'],
                            char_list=ep_info['char_list'])
+
+
+###########################################
+# House routes
+
+
+@app.route("/houses")
+def house_list():
+    """Show list of houses."""
+
+    house_list = House.query.order_by('house_name').all()
+
+    return render_template("house_list.html", house_list=house_list)
+
+
+@app.route("/houses/<int:house_id>")
+def house_details(house_id):
+    """Shows house details"""
+
+    house = House.query.filter(House.house_id == house_id).first()
+
+    house_char_obj_list = char_search_by_house(house_id)
+
+    return render_template("house.html",
+                           house_name=house.house_name,
+                           house_char_obj_list=house_char_obj_list)
 
 ###########################################
 # Title routes
@@ -130,41 +156,24 @@ def title_list():
 def title_details(title_id):
     """Shows title details"""
 
-    chars_with_title = title_search_by_id(title_id)
-
     title_obj = Title.query.filter(Title.title_id == title_id).first()
+    title_id = title_obj.title_id
     title_name = title_obj.title_name
+
+    char_ids_with_title = title_search_by_id(title_id)
+
+    char_objs_with_title = []
+
+    for char_id in char_ids_with_title:
+        char_obj = Character.query.filter(Character.char_id == char_id).first()
+        char_objs_with_title.append(char_obj)
 
     return render_template("title.html",
                            title_id=title_id,
                            title_name=title_name,
-                           chars_with_title=chars_with_title)
-
-###########################################
-# House routes
+                           char_objs_with_title=char_objs_with_title)
 
 
-# @app.route("/houses")
-# def house_list():
-#     """Show list of houses."""
-
-# #     query = session.query(Class.title.distinct().label("title"))
-# # titles = [row.title for row in query.all()]
-
-#     house_list = db.session.query(Character.char_house.distinct())
-
-#     return render_template("house_list.html", house_list=house_list)
-
-
-# @app.route("/houses/<int:house_name>")
-# def house_details(char_house):
-#     """Shows house details"""
-
-#     char_house_list = char_search_by_house(char_house)
-
-#     return render_template("house.html",
-#                            char_house=char_house,
-#                            char_house_list=char_house_list)
 
 ###########################################
 # Helper functions
