@@ -1,4 +1,5 @@
-from model import db, connect_to_db, Character, Title, Episode, CharTitle, CharEp, House, CharHouse
+from model import db, connect_to_db, Character, Title, Episode, CharTitle
+from model import CharEp, House, CharHouse
 
 ###########################################
 # Char searches
@@ -96,17 +97,15 @@ def char_search_by_episode(episode):
 def char_search_by_multiple_args(multi_arg_dict):
     """Searches by arg dict passed from search page, returns list of char objects
 
-        >>> char_search_by_multiple_args({'char_dead':'None', 'char_name':'None',
-        ... 'char_male':'False'})
+        >>> char_search_by_multiple_args({'char_dead':'Totally',
+        ... 'char_name':'None', 'char_male':'False'})
         ... #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
-        [<char_id=1052 name=Loreza Sand male=False dead=Totally>, ...
-         <char_id=1843 name=Tyene Sand male=False dead=Totally>]
+        [174, 316, 473, 476,... 1668, 1683, 1746, 1755, 1843, 1888, 2011]
 
         >>> char_search_by_multiple_args({'char_dead':'Undead'})
-        ... #doctest: +NORMALIZE_WHITESPACE
-        [<char_id=2035 name=Viserion (Dragon) male=True dead=Undead>,
-        <char_id=216 name=Benjen Stark male=True dead=Undead>]
-    """
+        [2029]
+
+        """
 
     # Makes new dict removing anything that has None/blank
 
@@ -122,7 +121,12 @@ def char_search_by_multiple_args(multi_arg_dict):
 
     list_of_chars = Character.query.filter_by(**arg_dict).all()
 
-    return sorted(list_of_chars)
+    list_of_char_ids = []
+
+    for char in list_of_chars:
+        list_of_char_ids.append(char.char_id)
+
+    return sorted(list_of_char_ids)
 
 
 ##########################################
