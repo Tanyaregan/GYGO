@@ -7,20 +7,12 @@ from model import db, connect_to_db, Character, Title, Episode, CharTitle, CharE
 def char_search_by_id(char_id):
     """Searches by char_id int, pulls all associated info into a dictionary.
 
-        >>> result = char_search_by_id(666).items()
-        >>> result.sort()
-        >>> result #doctest: +NORMALIZE_WHITESPACE
-        [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'House Morrigen'),
-        ('char_id', 666), ('char_male', True), ('char_name', u'Grance Morrigen'),
-        ('char_titles', [u'Ser'])]
-
-
-        >>> result = char_search_by_id(42).items()
-        >>> result.sort()
-        >>> result #doctest: +NORMALIZE_WHITESPACE
-        [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'No Affiliation'),
-        ('char_id', 42), ('char_male', False), ('char_name', u'Alaric of Eysen'),
-        ('char_titles', [])]
+    >>> result = char_search_by_id(42).items()
+    >>> result.sort()
+    >>> result #doctest: +NORMALIZE_WHITESPACE
+    [('char_dead', u'Unknown'), ('char_eps', []), ('char_house', u'No Affiliation'),
+    ('char_id', 42), ('char_male', False), ('char_name', u'Alaric of Eysen'),
+    ('char_titles', [])]
 
     """
 
@@ -35,10 +27,10 @@ def char_search_by_id(char_id):
 
     # House:
 
-    house_list_obj = CharHouse.query.filter(CharHouse.char_id == char_id).first()
-    house_id = house_list_obj.house_id
+    charhouse_obj = CharHouse.query.filter(CharHouse.char_id == char_id).first()
+    house_id = charhouse_obj.house_id
 
-    house_obj = House.query.filter(House.house_id == house_id.first())
+    house_obj = House.query.filter(House.house_id == house_id).first()
     char_house = house_obj.house_name
 
     # Title list:
@@ -105,7 +97,7 @@ def char_search_by_multiple_args(multi_arg_dict):
     """Searches by arg dict passed from search page, returns list of char objects
 
         >>> char_search_by_multiple_args({'char_dead':'None', 'char_name':'None',
-        ... 'char_house':'House Martell', 'char_male':'False'})
+        ... 'char_male':'False'})
         ... #doctest: +NORMALIZE_WHITESPACE, +ELLIPSIS
         [<char_id=1052 name=Loreza Sand male=False dead=Totally>, ...
          <char_id=1843 name=Tyene Sand male=False dead=Totally>]
@@ -174,18 +166,14 @@ def ep_search_by_id(ep_id):
 # Title searches
 
 
-def title_search_by_id(title_name):
+def title_search_by_name(title_name):
     """Searches by title_name str, returns char_ids int list.
 
-        >>> title_search_by_id(14)
-        [<char_id=254 name=Brandon Norrey male=True dead=Unknown>]
+        >>> title_search_by_name('Lady')
+        [24, 65, 70, 93, 112, 160, 233, 415, 633, 1020, 1170, 1261, 1516, 1650, 1667]
 
-        >>> title_search_by_id(90) #doctest: +NORMALIZE_WHITESPACE
-        [<char_id=1473 name=Ralf Kenning male=True dead=Unknown>,
-        <char_id=1591 name=Ronald Connington male=True dead=Unknown>]
-
-        >>> title_search_by_id(1000)
-        []
+        >>> title_search_by_name('King')
+        [557, 1674]
 
     """
     title_obj = Title.query.filter(Title.title_name == title_name).first()
@@ -212,7 +200,6 @@ def char_search_by_house(house_name):
 
         >>> char_search_by_house('Tarly')
         [455, 1481, 1751]
-
 
     """
 
