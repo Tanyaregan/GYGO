@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-Hallo I yam char page.
+Hallo I yam char detail page.
 <br><br>
 
 Char id :
@@ -11,6 +11,11 @@ Char id :
 Char name :
 {{ char_name }}
 <br><br>
+
+{% if char_thumb %}
+<img src="{{ char_thumb }}">
+<br><br>
+{% endif %}
 
 Is this char male?:
 {{ char_male }}

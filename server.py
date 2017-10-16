@@ -6,11 +6,14 @@ from flask import Flask, jsonify, render_template, redirect, request, flash, ses
 
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import db, connect_to_db, Character, Title, Episode, House, CharTitle, CharEp, CharHouse
+from model import db, connect_to_db, Character, Title, Episode, House
+from model import CharTitle, CharEp, CharHouse
 
 from search_queries import char_search_by_multiple_args, char_search_by_id
 from search_queries import char_search_by_house
 from search_queries import ep_search_by_id, title_search_by_id
+
+from api_queries import search_term_char_name, wikia_char_article_id, wikia_char_thumb
 
 app = Flask(__name__)
 
@@ -79,6 +82,12 @@ def char_details(char_id):
 
     char_info = char_search_by_id(char_id)
 
+    char = char_info['char_name']
+
+    wik_search_name = search_term_char_name(char)
+    wik_char_id = wikia_char_article_id(wik_search_name)
+    char_thumb = wikia_char_thumb(wik_char_id)
+
     return render_template("char.html",
                            char_name=char_info['char_name'],
                            char_id=char_info['char_id'],
@@ -86,7 +95,10 @@ def char_details(char_id):
                            char_dead=char_info['char_dead'],
                            char_house=char_info['house_obj'],
                            char_titles=char_info['title_objs'],
-                           char_eps=char_info['ep_objs'])
+                           char_eps=char_info['ep_objs'],
+                           char_thumb=char_thumb)
+
+
 
 ##################################################
 # Episode routes

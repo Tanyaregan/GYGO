@@ -2,10 +2,14 @@
 
 import json
 
+import requests
+
 from sqlalchemy import func
 
 from model import Character, Title, Episode, House, CharTitle, CharEp, CharHouse
 from model import connect_to_db, db
+
+from api_queries import wikia_char_article_id
 
 from server import app
 
@@ -206,7 +210,121 @@ def load_char_houses():
 
     db.session.commit()
 
+
+#################################################
+# Database cleaner functions
+
+
+def char_names():
+    """Returns list of char names"""
+
+    char_objs = Character.query.order_by('char_name').all()
+
+    char_names = []
+
+    for char in char_objs:
+
+        char_name = char.char_name
+
+        char_names.append(char_name)
+
+    return char_names
+
+
+def non_wikia_chars(char_names):
+    """Takes a list of char names with no wikia id,
+    searches Wikia and adds name to list if not in Wikia."""
+
+    non_wikia_char_names = []
+
+    for char in char_names:
+
+        if not wikia_char_article_id(char):
+
+            non_wikia_char_names.append(char)
+
+    return non_wikia_char_names
+
+
+def non_wikia_char_ids(non_wikia_char_names):
+    """takes a list of char names, returns char ids."""
+
+    non_wikia_char_ids = []
+
+    for name in non_wikia_char_names:
+
+        char = Character.query.filter_by(char_name=name).first()
+
+        char_id = char.char_id
+
+        non_wikia_char_ids.append(char_id)
+
+    return non_wikia_char_ids
+
+
+def delete_non_wikia_chars(non_wikia_char_ids):
+    """Deletes all records from the non-wikia chars list."""
+
+    for char_id in non_wikia_char_ids:
+
+        char = CharHouse.query.filter_by(char_id=char_id).first()
+        if char:
+            db.session.delete(char)
+
+        char = CharTitle.query.filter_by(char_id=char_id).first()
+        if char:
+            db.session.delete(char)
+
+        char = CharEp.query.filter_by(char_id=char_id).first()
+        if char:
+            db.session.delete(char)
+
+        char = Character.query.filter_by(char_id=char_id).first()
+        if char:
+            db.session.delete(char)
+
+        db.session.commit()
+
+        print "deleted char id", char_id
+
+
+def delete_single_char_by_id(char_id):
+    """Takes a char id and deletes rows from all tables in db."""
+
+    char = CharHouse.query.filter_by(char_id=char_id).first()
+    if char:
+        db.session.delete(char)
+
+    char = CharTitle.query.filter_by(char_id=char_id).first()
+    if char:
+        db.session.delete(char)
+
+    char = CharEp.query.filter_by(char_id=char_id).first()
+    if char:
+        db.session.delete(char)
+
+    char = Character.query.filter_by(char_id=char_id).first()
+    if char:
+        db.session.delete(char)
+
+    db.session.commit()
+
+    print char_id, "char deleted from 4 db tables"
+
+    db.session.commit()
+
+
+def delete_empty_houses():
+    """Deletes rows in Houses where there is no chars in Char_house."""
+
+    house_objs = CharHouse.query.order_by('char_id').all()
+
+
+
+
+
 ##################################################
+
 
 if __name__ == "__main__":
     connect_to_db(app)
@@ -220,5 +338,6 @@ if __name__ == "__main__":
 # load_houses()
 
 # load_char_title()
-# # load_char_episodes()
+# load_char_episodes()
 # load_char_houses()
+
