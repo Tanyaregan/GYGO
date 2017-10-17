@@ -29,6 +29,16 @@ Char house is:
 <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
 <br><br>
 
+Etsy items:
+<ul>
+  {% for item in etsy_items %}
+    <li>
+      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <img src="{{ item['img'] }}"></a>
+    </li>
+  {% endfor %}
+</ul>
+
 Titles:
   <ul>
   {% for title in char_titles %}

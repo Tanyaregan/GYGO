@@ -317,9 +317,64 @@ def delete_single_char_by_id(char_id):
 def delete_empty_houses():
     """Deletes rows in Houses where there is no chars in Char_house."""
 
-    house_objs = CharHouse.query.order_by('char_id').all()
+    char_house_objs = CharHouse.query.order_by('house_id').all()
+    char_house_ids = []
+
+    for obj in char_house_objs:
+        char_house_id = obj.house_id
+        char_house_ids.append(char_house_id)
+
+    house_objs = House.query.order_by('house_id').all()
+    house_ids = []
+
+    for obj in house_objs:
+        house_id = obj.house_id
+        house_ids.append(house_id)
+
+    char_house_ids = set(char_house_ids)
+    house_ids = set(house_ids)
+
+    no_char_houses = house_ids - char_house_ids
+
+    for house_id in no_char_houses:
+        print house_id
+        house_obj = House.query.filter_by(house_id=house_id).first()
+        if house_obj:
+            db.session.delete(house_obj)
+
+    db.session.commit()
 
 
+def delete_empty_titles():
+    """Deletes rows in Titles where there is no chars in Char_title."""
+
+    char_title_objs = CharTitle.query.order_by('title_id').all()
+    char_title_ids = []
+
+    for obj in char_title_objs:
+        char_title_id = obj.title_id
+        char_title_ids.append(char_title_id)
+
+    title_objs = Title.query.order_by('title_id').all()
+    title_ids = []
+
+    for obj in title_objs:
+        title_id = obj.title_id
+        title_ids.append(title_id)
+
+    char_title_ids = set(char_title_ids)
+    title_ids = set(title_ids)
+
+    no_char_titles = title_ids - char_title_ids
+
+    for title_id in no_char_titles:
+
+        title_obj = Title.query.filter_by(title_id=title_id).first()
+
+        if title_obj:
+            db.session.delete(title_obj)
+
+    db.session.commit()
 
 
 

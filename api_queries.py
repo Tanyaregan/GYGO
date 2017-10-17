@@ -1,9 +1,15 @@
 
 import requests
-from pprint import pprint
 import os
 
+from ebaysdk.finding import Connection as Finding
+from ebaysdk.exception import ConnectionError
+
+
 ETSY_API_KEY = os.environ['ETSY_API_KEY']
+EBAY_API_KEY = os.environ['EBAY_API_KEY']
+
+
 
 # Wikia searches
 ##################################################################
@@ -69,55 +75,76 @@ def wikia_char_thumb(wik_char_id):
 ################################################################################
 
 
-def etsy_sale_search(char_name):
+def char_page_etsy_sale_search(char_name):
     """Searches Etsy with "GoT" + char_name to return sale items."""
 
-    payload = {'api_key': ETSY_API_KEY, 'limit': 5, 'category': 'clothing',
-               'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url, images',
-               'includes': 'Images(url_170x135)', 'tags': 'game of thrones,costume,cosplay ' + char_name}
+    payload = {'api_key': ETSY_API_KEY, 'limit': 3, 'category': 'clothing',
+               'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
+               'includes': 'Images(url_170x135)',
+               'tags': 'game of thrones,costume,cosplay ' + char_name}
 
     items = requests.get('https://openapi.etsy.com/v2/listings/active/', params=payload)
-
-    print "search url: ", items.url
 
     if items.ok:
 
         item_dict = items.json()
 
+        item_objs = []
+
         for item in item_dict['results']:
 
+            item_obj = {}
+
             item_title = item['title']
+            item_obj['title'] = item_title
 
             item_url = item['url']
+            item_obj['url'] = item_url
 
             item_img = item['Images'][0]['url_170x135']
+            item_obj['img'] = item_img
 
-            print "item characteristics:"
-            print "item title: ", item_title
-            print "item url: ", item_url
-            print "item img: ", item_img
+            item_objs.append(item_obj)
 
     else:
 
         return None
 
+    return item_objs
 
-# def wikia_char_abstract(wik_char_id):
-#      """Searches article info, returns abstract text."""
-
-#     payload = {'ids': wik_char_id, 'abstract': 500}
-
-#     article_details = requests.get('http://gameofthrones.wikia.com/api/v1/Articles/Details/', params=payload)
-
-#     article_detail_dict = article_details.json()
-
-#     char_abstract = article_detail_dict["items"][str(wik_char_id)]["abstract"]
-
-#     return char_abstract
+# Ebay query
+########################################################################
 
 
-# # Wikia searches - House
-# #######################################################################
+def char_page_ebay_sale_search(char_name):
+    """Searches Etsy with "GoT" + char_name to return sale items."""
+
+    api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
+                   'paginationInput': {'entriesPerPage': 6, 'pageNumber': 1}}
+
+    try:
+
+        api = Finding(appid=EBAY_API_KEY, config_file=None)
+        response = api.execute('findItemsAdvanced', api_request)
+
+    except:
+
+        print "Got nothin"
+
+    response = response.dict()
+
+    for item in response['searchResult']['item']:
+
+        thumb = item['galleryURL']
+        title = item['title']
+        url = item['viewItemURL']
+
+        print thumb
+        print title
+        print url
+
+
+############################
 
 
 # def wikia_house_article_link(house_name):
