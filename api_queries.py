@@ -71,12 +71,12 @@ def wikia_char_thumb(wik_char_id):
 
         return None
 
-# Etsy search
+# Etsy searches
 ################################################################################
 
 
 def char_page_etsy_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return sale items."""
+    """Searches Etsy with "GoT" + char_name to return 3 sale items."""
 
     payload = {'api_key': ETSY_API_KEY, 'limit': 3, 'category': 'clothing',
                'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
@@ -112,15 +112,88 @@ def char_page_etsy_sale_search(char_name):
 
     return item_objs
 
-# Ebay query
+
+def item_page_etsy_sale_search(char_name):
+    """Searches Etsy with "GoT" + char_name to return 15 sale items."""
+
+    payload = {'api_key': ETSY_API_KEY, 'limit': 15, 'category': 'clothing',
+               'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
+               'includes': 'Images(url_170x135)',
+               'tags': 'game of thrones,costume,cosplay ' + char_name}
+
+    items = requests.get('https://openapi.etsy.com/v2/listings/active/', params=payload)
+
+    if items.ok:
+
+        item_dict = items.json()
+
+        item_objs = []
+
+        for item in item_dict['results']:
+
+            item_obj = {}
+
+            item_title = item['title']
+            item_obj['title'] = item_title
+
+            item_url = item['url']
+            item_obj['url'] = item_url
+
+            item_img = item['Images'][0]['url_170x135']
+            item_obj['thumb'] = item_img
+
+            item_objs.append(item_obj)
+
+    else:
+
+        return None
+
+    return item_objs
+
+# Ebay searches
 ########################################################################
 
 
 def char_page_ebay_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return sale items."""
+    """Searches Etsy with "GoT" + char_name to return 3 sale items."""
 
     api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
-                   'paginationInput': {'entriesPerPage': 6, 'pageNumber': 1}}
+                   'paginationInput': {'entriesPerPage': 3, 'pageNumber': 1}}
+
+    try:
+
+        api = Finding(appid=EBAY_API_KEY, config_file=None)
+        response = api.execute('findItemsAdvanced', api_request)
+
+    except:
+
+        print "Got nothin"
+
+    ebay_results = response.dict()
+    ebay_items = []
+
+    for item in ebay_results['searchResult']['item']:
+
+        ebay_item = {}
+
+        thumb = item['galleryURL']
+        title = item['title']
+        url = item['viewItemURL']
+
+        ebay_item['thumb'] = thumb
+        ebay_item['title'] = title
+        ebay_item['url'] = url
+
+        ebay_items.append(ebay_item)
+
+    return ebay_items
+
+
+def item_page_ebay_sale_search(char_name):
+    """Searches Etsy with "GoT" + char_name to return 15 sale items."""
+
+    api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
+                   'paginationInput': {'entriesPerPage': 15, 'pageNumber': 1}}
 
     try:
 

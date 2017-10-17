@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Hallo I yam item detail page.
+<br>
+
+Char id :
+{{ char_id }}
+<br>
+
+Char name :
+{{ char_name }}
+<br>
+
+<img src="{{ char_thumb }}">
+<br>
+
+eBay Items:
+<ul>
+  {% for item in more_ebay_items %}
+    <li>
+      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <img src="{{ item['thumb'] }}"></a>
+    </li>
+  {% endfor %}
+</ul>
+
+Etsy items:
+<ul>
+  {% for item in more_etsy_items %}
+    <li>
+      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <img src="{{ item['thumb'] }}"></a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

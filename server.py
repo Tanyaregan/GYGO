@@ -15,6 +15,7 @@ from search_queries import ep_search_by_id, title_search_by_id
 
 from api_queries import search_term_char_name, wikia_char_article_id, wikia_char_thumb
 from api_queries import char_page_etsy_sale_search, char_page_ebay_sale_search
+from api_queries import item_page_etsy_sale_search, item_page_ebay_sale_search
 
 app = Flask(__name__)
 
@@ -104,6 +105,31 @@ def char_details(char_id):
                            char_thumb=char_thumb,
                            etsy_items=etsy_items,
                            ebay_items=ebay_items)
+
+
+@app.route("/chars/<int:char_id>/item")
+def char_item_details(char_id):
+    """Shows more items for sale relating to char."""
+
+    char_info = char_search_by_id(char_id)
+
+    char = char_info['char_name']
+
+    wik_search_name = search_term_char_name(char)
+    wik_char_id = wikia_char_article_id(wik_search_name)
+    char_thumb = wikia_char_thumb(wik_char_id)
+
+    more_ebay_items = item_page_ebay_sale_search(char)
+
+    more_etsy_items = item_page_etsy_sale_search(char)
+
+    return render_template("item.html",
+                           char_id=char_id,
+                           char_name=char,
+                           char_thumb=char_thumb,
+                           more_etsy_items=more_etsy_items,
+                           more_ebay_items=more_ebay_items)
+
 
 ##################################################
 # Episode routes
