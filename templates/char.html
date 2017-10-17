@@ -29,12 +29,22 @@ Char house is:
 <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
 <br><br>
 
+eBay Items:
+<ul>
+  {% for item in ebay_items %}
+    <li>
+      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <img src="{{ item['thumb'] }}"></a>
+    </li>
+  {% endfor %}
+</ul>
+
 Etsy items:
 <ul>
   {% for item in etsy_items %}
     <li>
       <a href="{{ item['url'] }}">{{ item['title'] }}<br>
-      <img src="{{ item['img'] }}"></a>
+      <img src="{{ item['thumb'] }}"></a>
     </li>
   {% endfor %}
 </ul>

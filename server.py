@@ -14,7 +14,7 @@ from search_queries import char_search_by_house
 from search_queries import ep_search_by_id, title_search_by_id
 
 from api_queries import search_term_char_name, wikia_char_article_id, wikia_char_thumb
-from api_queries import char_page_etsy_sale_search
+from api_queries import char_page_etsy_sale_search, char_page_ebay_sale_search
 
 app = Flask(__name__)
 
@@ -91,6 +91,8 @@ def char_details(char_id):
 
     etsy_items = char_page_etsy_sale_search(char)
 
+    ebay_items = char_page_ebay_sale_search(char)
+
     return render_template("char.html",
                            char_name=char_info['char_name'],
                            char_id=char_info['char_id'],
@@ -100,7 +102,8 @@ def char_details(char_id):
                            char_titles=char_info['title_objs'],
                            char_eps=char_info['ep_objs'],
                            char_thumb=char_thumb,
-                           etsy_items=etsy_items)
+                           etsy_items=etsy_items,
+                           ebay_items=ebay_items)
 
 ##################################################
 # Episode routes

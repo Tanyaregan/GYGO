@@ -102,7 +102,7 @@ def char_page_etsy_sale_search(char_name):
             item_obj['url'] = item_url
 
             item_img = item['Images'][0]['url_170x135']
-            item_obj['img'] = item_img
+            item_obj['thumb'] = item_img
 
             item_objs.append(item_obj)
 
@@ -131,18 +131,24 @@ def char_page_ebay_sale_search(char_name):
 
         print "Got nothin"
 
-    response = response.dict()
+    ebay_results = response.dict()
+    ebay_items = []
 
-    for item in response['searchResult']['item']:
+    for item in ebay_results['searchResult']['item']:
+
+        ebay_item = {}
 
         thumb = item['galleryURL']
         title = item['title']
         url = item['viewItemURL']
 
-        print thumb
-        print title
-        print url
+        ebay_item['thumb'] = thumb
+        ebay_item['title'] = title
+        ebay_item['url'] = url
 
+        ebay_items.append(ebay_item)
+
+    return ebay_items
 
 ############################
 
