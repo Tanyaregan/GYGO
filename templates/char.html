@@ -29,6 +29,7 @@ Char house is:
 <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
 <br><br>
 
+{% if ebay_items %}
 eBay Items:
 <ul>
   {% for item in ebay_items %}
@@ -38,7 +39,9 @@ eBay Items:
     </li>
   {% endfor %}
 </ul>
+{% endif %}
 
+{% if etsy_items %}
 Etsy items:
 <ul>
   {% for item in etsy_items %}
@@ -51,6 +54,8 @@ Etsy items:
 
 <a href="/chars/{{ char_id }}/item">Want to see more costume items?</a>
 <br><br>
+
+{% endif %}
 
 Titles:
   <ul>

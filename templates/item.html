@@ -15,6 +15,7 @@ Char name :
 <img src="{{ char_thumb }}">
 <br>
 
+{% if more_ebay_items %}
 eBay Items:
 <ul>
   {% for item in more_ebay_items %}
@@ -24,7 +25,9 @@ eBay Items:
     </li>
   {% endfor %}
 </ul>
+{% endif %}
 
+{% if more_etsy_items %}
 Etsy items:
 <ul>
   {% for item in more_etsy_items %}
@@ -34,5 +37,6 @@ Etsy items:
     </li>
   {% endfor %}
 </ul>
+{% endif %}
 
 {% endblock %}

@@ -14,8 +14,8 @@ from search_queries import char_search_by_house
 from search_queries import ep_search_by_id, title_search_by_id
 
 from api_queries import search_term_char_name, wikia_char_article_id, wikia_char_thumb
-from api_queries import char_page_etsy_sale_search, char_page_ebay_sale_search
-from api_queries import item_page_etsy_sale_search, item_page_ebay_sale_search
+from api_queries import char_page_etsy, char_page_ebay
+from api_queries import item_page_etsy, item_page_ebay
 
 app = Flask(__name__)
 
@@ -90,9 +90,9 @@ def char_details(char_id):
     wik_char_id = wikia_char_article_id(wik_search_name)
     char_thumb = wikia_char_thumb(wik_char_id)
 
-    etsy_items = char_page_etsy_sale_search(char)
+    etsy_items = char_page_etsy(char)
 
-    ebay_items = char_page_ebay_sale_search(char)
+    ebay_items = char_page_ebay(char)
 
     return render_template("char.html",
                            char_name=char_info['char_name'],
@@ -119,9 +119,9 @@ def char_item_details(char_id):
     wik_char_id = wikia_char_article_id(wik_search_name)
     char_thumb = wikia_char_thumb(wik_char_id)
 
-    more_ebay_items = item_page_ebay_sale_search(char)
+    more_ebay_items = item_page_ebay(char)
 
-    more_etsy_items = item_page_etsy_sale_search(char)
+    more_etsy_items = item_page_etsy(char)
 
     return render_template("item.html",
                            char_id=char_id,
@@ -182,6 +182,7 @@ def house_details(house_id):
                            house_name=house.house_name,
                            house_char_obj_list=house_char_obj_list)
 
+
 ###########################################
 # Title routes
 
@@ -217,10 +218,8 @@ def title_details(title_id):
                            char_objs_with_title=char_objs_with_title)
 
 
-
 ###########################################
 # Helper functions
-
 
 if __name__ == "__main__":
 
@@ -230,6 +229,5 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     DebugToolbarExtension(app)
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     app.run(port=5000, host='0.0.0.0')

@@ -3,13 +3,9 @@ import requests
 import os
 
 from ebaysdk.finding import Connection as Finding
-from ebaysdk.exception import ConnectionError
-
 
 ETSY_API_KEY = os.environ['ETSY_API_KEY']
 EBAY_API_KEY = os.environ['EBAY_API_KEY']
-
-
 
 # Wikia searches
 ##################################################################
@@ -75,10 +71,10 @@ def wikia_char_thumb(wik_char_id):
 ################################################################################
 
 
-def char_page_etsy_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return 3 sale items."""
+def etsy_search(char_name, limit):
+    """Searches Etsy with associated payload paraameters."""
 
-    payload = {'api_key': ETSY_API_KEY, 'limit': 3, 'category': 'clothing',
+    payload = {'api_key': ETSY_API_KEY, 'limit': limit, 'category': 'clothing',
                'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
                'includes': 'Images(url_170x135)',
                'tags': 'game of thrones,costume,cosplay ' + char_name}
@@ -89,7 +85,7 @@ def char_page_etsy_sale_search(char_name):
 
         item_dict = items.json()
 
-        item_objs = []
+        etsy_item_objs = []
 
         for item in item_dict['results']:
 
@@ -104,183 +100,100 @@ def char_page_etsy_sale_search(char_name):
             item_img = item['Images'][0]['url_170x135']
             item_obj['thumb'] = item_img
 
-            item_objs.append(item_obj)
+            etsy_item_objs.append(item_obj)
 
     else:
 
         return None
 
-    return item_objs
+    return etsy_item_objs
 
 
-def item_page_etsy_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return 15 sale items."""
+def char_page_etsy(char_name):
+    """Searches Etsy to return 3 sale items."""
 
-    payload = {'api_key': ETSY_API_KEY, 'limit': 15, 'category': 'clothing',
-               'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
-               'includes': 'Images(url_170x135)',
-               'tags': 'game of thrones,costume,cosplay ' + char_name}
+    char_etsy_items = etsy_search(char_name, 3)
 
-    items = requests.get('https://openapi.etsy.com/v2/listings/active/', params=payload)
+    return char_etsy_items
 
-    if items.ok:
 
-        item_dict = items.json()
+def item_page_etsy(char_name):
+    """Searches Etsy to return 15 sale items."""
 
-        item_objs = []
+    char_etsy_items = etsy_search(char_name, 15)
 
-        for item in item_dict['results']:
+    return char_etsy_items
 
-            item_obj = {}
-
-            item_title = item['title']
-            item_obj['title'] = item_title
-
-            item_url = item['url']
-            item_obj['url'] = item_url
-
-            item_img = item['Images'][0]['url_170x135']
-            item_obj['thumb'] = item_img
-
-            item_objs.append(item_obj)
-
-    else:
-
-        return None
-
-    return item_objs
 
 # Ebay searches
 ########################################################################
 
-
-def char_page_ebay_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return 3 sale items."""
+def ebay_search(char_name, pagination):
+    """Searches ebay with associated payload parameters."""
 
     api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
-                   'paginationInput': {'entriesPerPage': 3, 'pageNumber': 1}}
+                   'paginationInput': pagination,
+                   'HideDuplicateItem': True}
 
     try:
 
         api = Finding(appid=EBAY_API_KEY, config_file=None)
         response = api.execute('findItemsAdvanced', api_request)
+        ebay_results = response.dict()
 
     except:
 
         print "Got nothin"
 
-    ebay_results = response.dict()
-    ebay_items = []
+    data_present = ebay_results['searchResult'].get('item', None)
 
-    for item in ebay_results['searchResult']['item']:
+    if data_present:
 
-        ebay_item = {}
+        ebay_items = []
 
-        thumb = item['galleryURL']
-        title = item['title']
-        url = item['viewItemURL']
+        for item in ebay_results['searchResult']['item']:
 
-        ebay_item['thumb'] = thumb
-        ebay_item['title'] = title
-        ebay_item['url'] = url
+            ebay_item = {}
 
-        ebay_items.append(ebay_item)
+            thumb = item['galleryURL']
+            title = item['title']
+            url = item['viewItemURL']
 
-    return ebay_items
+            ebay_item['thumb'] = thumb
+            ebay_item['title'] = title
+            ebay_item['url'] = url
 
+            ebay_items.append(ebay_item)
 
-def item_page_ebay_sale_search(char_name):
-    """Searches Etsy with "GoT" + char_name to return 15 sale items."""
+    else:
 
-    api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
-                   'paginationInput': {'entriesPerPage': 15, 'pageNumber': 1}}
-
-    try:
-
-        api = Finding(appid=EBAY_API_KEY, config_file=None)
-        response = api.execute('findItemsAdvanced', api_request)
-
-    except:
-
-        print "Got nothin"
-
-    ebay_results = response.dict()
-    ebay_items = []
-
-    for item in ebay_results['searchResult']['item']:
-
-        ebay_item = {}
-
-        thumb = item['galleryURL']
-        title = item['title']
-        url = item['viewItemURL']
-
-        ebay_item['thumb'] = thumb
-        ebay_item['title'] = title
-        ebay_item['url'] = url
-
-        ebay_items.append(ebay_item)
+        return None
 
     return ebay_items
 
-############################
+
+def char_page_ebay(char_name):
+    """Searches Ebay with 3 item pagination."""
+
+    char_ebay_items = ebay_search(char_name, {'entriesPerPage': 3, 'pageNumber': 2})
+
+    return char_ebay_items
 
 
-# def wikia_house_article_link(house_name):
-#     """Searches wikia by house name, returns top article id."""
+def item_page_ebay(char_name,):
+    """Searches Ebay with 15 item pagination."""
 
-#     house_url = http://gameofthrones.wikia.com/wiki/house_name
+    item_ebay_items = ebay_search(char_name, {'entriesPerPage': 15, 'pageNumber': 1})
 
-#     return house_page_id
+    return item_ebay_items
 
+###########################################
+# Doc Tests
 
-# def search_wikia_house_thumb(wik_house_id):
-#     """Searches house info, returns sigil thumbnail url."""
-
-#     return house_thumb_url
-
-
-# def search_wikia_house_movie(wik_house_id):
-#     """Searches house info, returns house movie url."""
-
-#     return house_movie_url
-
-
-# # Wikia Episode searches
-# ######################################################################
-
-
-# def search_term_ep_name(ep):
-#     """Reformats search name to correctly work with api."""
-
-#     ep_name = []
-
-#     for letter in ep:
-#         if letter == ' ':
-#             letter = '_'
-#             ep_name.append(letter)
-#         else:
-#             ep_name.append(letter)
-
-#     return ('').join(ep_name)
-
-
-# def wikia_episode_article_link(ep_name):
-#     """Searches wikia and returns episode article_id."""
-
-#         return wik_ep_id
-
-
-# def wikia_ep_summary(wik_ep_id):
-#     """Searches ep id, returns summary from wikia article."""
-
-#         return ep_summary
-
-
-# def wikia_search_ep_deaths(wik_ep_id):
-#     """Searches ep id, returns death list from wikia article."""
-
-#         return ep_deaths
-
-
+if __name__ == "__main__":
+    print
+    import doctest
+    if doctest.testmod().failed == 0:
+        print "*** PASSED! (woot) ***"
+    print
 
