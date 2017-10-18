@@ -12,7 +12,15 @@ EBAY_API_KEY = os.environ['EBAY_API_KEY']
 
 
 def search_term_char_name(char):
-    """Reformats search name to correctly work with wikia api."""
+    """Reformats search name to correctly work with wikia api.
+
+    >>> search_term_char_name("Arya Stark")
+    'Arya_Stark'
+
+    >>> search_term_char_name('jon_snow')
+    'jon_snow'
+
+    """
 
     char_name = []
 
@@ -27,7 +35,12 @@ def search_term_char_name(char):
 
 
 def wikia_char_article_id(char_name):
-    """Searches wikia with char_name, returns top article_id."""
+    """Searches wikia with char_name, returns top article_id.
+
+    >>> wikia_char_article_id("Catelyn_Stark")
+    2119
+
+    """
 
     payload = {'query': char_name}
 
@@ -47,7 +60,12 @@ def wikia_char_article_id(char_name):
 
 
 def wikia_char_thumb(wik_char_id):
-    """Searches article info, returns thumbnail link and abstract."""
+    """Searches article info, returns thumbnail link.
+
+    >>> wikia_char_thumb(2119) #doctest: +ELLIPSIS
+    u'https://vignette.wikia.nocookie.net/gameofthrones/images/d/d8/Catelyn...'
+
+    """
 
     if wik_char_id:
 
@@ -72,7 +90,15 @@ def wikia_char_thumb(wik_char_id):
 
 
 def etsy_search(char_name, limit):
-    """Searches Etsy with associated payload paraameters."""
+    """Searches Etsy with associated payload paraameters, returns list.
+
+    >>> etsy_search('Danaerys Targaryen', 1)[0]['thumb']
+    u'https://img0.etsystatic.com/165/0/12029936/il_170x135.1202901328_ljz9.jpg'
+
+    >>> etsy_search('Sansa Stark', 1)[0]['url'] #doctest: +ELLIPSIS
+    u'https://www.etsy.com/listing/213408831/...'
+
+    """
 
     payload = {'api_key': ETSY_API_KEY, 'limit': limit, 'category': 'clothing',
                'keywords': 'Game of Thrones ' + char_name, 'fields': 'title,url,immages',
@@ -91,14 +117,14 @@ def etsy_search(char_name, limit):
 
             item_obj = {}
 
+            item_img = item['Images'][0]['url_170x135']
+            item_obj['thumb'] = item_img
+
             item_title = item['title']
             item_obj['title'] = item_title
 
             item_url = item['url']
             item_obj['url'] = item_url
-
-            item_img = item['Images'][0]['url_170x135']
-            item_obj['thumb'] = item_img
 
             etsy_item_objs.append(item_obj)
 
@@ -110,7 +136,12 @@ def etsy_search(char_name, limit):
 
 
 def char_page_etsy(char_name):
-    """Searches Etsy to return 3 sale items."""
+    """Searches Etsy to return 3 sale items.
+
+    >>> results = char_page_etsy('Cersei Lannister')
+    >>> len(results)
+    3
+    """
 
     char_etsy_items = etsy_search(char_name, 3)
 
@@ -118,7 +149,12 @@ def char_page_etsy(char_name):
 
 
 def item_page_etsy(char_name):
-    """Searches Etsy to return 15 sale items."""
+    """Searches Etsy to return 15 sale items.
+
+    >>> results = item_page_etsy('Jon Snow')
+    >>> len(results)
+    15
+    """
 
     char_etsy_items = etsy_search(char_name, 15)
 
@@ -129,7 +165,17 @@ def item_page_etsy(char_name):
 ########################################################################
 
 def ebay_search(char_name, pagination):
-    """Searches ebay with associated payload parameters."""
+    """Searches ebay with associated payload parameters.
+
+    >>> results = ebay_search('Arya Stark', {'entriesPerPage': 1, 'pageNumber': 1})[0]['thumb']
+    >>> results
+    'http://thumbs1.ebaystatic.com/pict/04040_0.jpg'
+
+    >>> results = ebay_search('Sansa Stark', {'entriesPerPage': 1, 'pageNumber': 1})[0]['url']
+    >>> results  #doctest: +ELLIPSIS
+    'http://www.ebay.com/itm/Game-Thrones-Sansa-...'
+
+    """
 
     api_request = {'keywords': 'Game of Thrones ' + char_name, 'categoryId': 175648,
                    'paginationInput': pagination,
@@ -173,7 +219,13 @@ def ebay_search(char_name, pagination):
 
 
 def char_page_ebay(char_name):
-    """Searches Ebay with 3 item pagination."""
+    """Searches Ebay with 3 item pagination.
+
+    >>> results = char_page_ebay('Melisandre')
+    >>> len(results)
+    3
+
+    """
 
     char_ebay_items = ebay_search(char_name, {'entriesPerPage': 3, 'pageNumber': 2})
 
@@ -181,7 +233,13 @@ def char_page_ebay(char_name):
 
 
 def item_page_ebay(char_name,):
-    """Searches Ebay with 15 item pagination."""
+    """Searches Ebay with 15 item pagination.
+
+    >>> results = item_page_ebay('Arya Stark')
+    >>> len(results)
+    15
+
+    """
 
     item_ebay_items = ebay_search(char_name, {'entriesPerPage': 15, 'pageNumber': 1})
 
@@ -194,6 +252,5 @@ if __name__ == "__main__":
     print
     import doctest
     if doctest.testmod().failed == 0:
-        print "*** PASSED! (woot) ***"
+        print "*** PASSED! (blam) ***"
     print
-
