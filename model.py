@@ -110,18 +110,43 @@ class CharHouse(db.Model):
 
     def __repr__(self):
         return "<charhouse_id=%d char_id=%s house_id=%s>" % (self.charhouse_id,
-                                                       self.char_id,
-                                                       self.house_id)
+                                                             self.char_id,
+                                                             self.house_id)
 
 ##############################################################################
 # Helper functions
 
 
-def connect_to_db(app):
+def test_db():
+
+    c1 = Character(char_name='char_1', char_male=False, char_dead='Totally')
+    db.session.add(c1)
+    c2 = Character(char_name='char_2', char_male=True, char_dead='Not yet..')
+    db.session.add(c2)
+
+    t1 = Title(title_name='title_1')
+    db.session.add(t1)
+    t2 = Title(title_name='title_2')
+    db.session.add(t2)
+
+    e1 = Episode(ep_name='episode_1', ep_season=1)
+    db.session.add(e1)
+    e2 = Episode(ep_name='episode_2', ep_season=2)
+    db.session.add(e2)
+
+    h1 = House(house_name='house_1')
+    db.session.add(h1)
+    h2 = House(house_name='house_2_electric_boogaloo')
+    db.session.add(h2)
+
+    db.session.commit()
+
+
+def connect_to_db(app, db_uri='postgresql:///characters'):
     """Connect the database to our Flask app."""
 
     # Configure to use our Postgres database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///characters'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_ECHO'] = False
     db.app = app
     db.init_app(app)

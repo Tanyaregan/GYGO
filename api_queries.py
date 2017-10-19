@@ -17,9 +17,6 @@ def search_term_char_name(char):
     >>> search_term_char_name("Arya Stark")
     'Arya_Stark'
 
-    >>> search_term_char_name('jon_snow')
-    'jon_snow'
-
     """
 
     char_name = []
@@ -39,6 +36,9 @@ def wikia_char_article_id(char_name):
 
     >>> wikia_char_article_id("Catelyn_Stark")
     2119
+
+    >>> wikia_char_article_id('No results for you')
+    None
 
     """
 
@@ -63,7 +63,10 @@ def wikia_char_thumb(wik_char_id):
     """Searches article info, returns thumbnail link.
 
     >>> wikia_char_thumb(2119) #doctest: +ELLIPSIS
-    u'https://vignette.wikia.nocookie.net/gameofthrones/images/d/d8/Catelyn...'
+    u'https://vignette.wikia.nocookie.net/gameofthrones/images/...'
+
+    >>> wikia_char_thumb(10000000)
+    None
 
     """
 
@@ -92,11 +95,14 @@ def wikia_char_thumb(wik_char_id):
 def etsy_search(char_name, limit):
     """Searches Etsy with associated payload paraameters, returns list.
 
-    >>> etsy_search('Danaerys Targaryen', 1)[0]['thumb']
-    u'https://img0.etsystatic.com/165/0/12029936/il_170x135.1202901328_ljz9.jpg'
+    >>> etsy_search('Danaerys Targaryen', 1)[0]['thumb'] #doctest: +ELLIPSIS
+    u'https://img0.etsystatic.com/...jpg'
 
     >>> etsy_search('Sansa Stark', 1)[0]['url'] #doctest: +ELLIPSIS
-    u'https://www.etsy.com/listing/213408831/...'
+    u'https://www.etsy.com/listing/...'
+
+    >>> etsy_search('Blaaaaaaah no char', 1)
+    None
 
     """
 
@@ -168,12 +174,12 @@ def ebay_search(char_name, pagination):
     """Searches ebay with associated payload parameters.
 
     >>> results = ebay_search('Arya Stark', {'entriesPerPage': 1, 'pageNumber': 1})[0]['thumb']
-    >>> results
-    'http://thumbs1.ebaystatic.com/pict/04040_0.jpg'
+    >>> results #doctest: +ELLIPSIS
+    'http://thumbs1.ebaystatic.com/pict...'
 
     >>> results = ebay_search('Sansa Stark', {'entriesPerPage': 1, 'pageNumber': 1})[0]['url']
     >>> results  #doctest: +ELLIPSIS
-    'http://www.ebay.com/itm/Game-Thrones-Sansa-...'
+    'http://www.ebay.com/itm/Game-Thrones...'
 
     """
 

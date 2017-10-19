@@ -1899,7 +1899,6 @@ COPY char_houses (charhouse_id, char_id, house_id) FROM stdin;
 2392	361	361
 2399	368	361
 2403	372	214
-2414	383	262
 2419	388	312
 2424	393	3
 2458	427	293
@@ -2124,10 +2123,6 @@ COPY char_titles (chartitle_id, char_id, title_id) FROM stdin;
 9534	342	185
 9535	342	425
 9553	368	447
-9568	383	251
-9569	383	105
-9570	383	353
-9571	383	275
 9580	388	392
 9581	388	419
 9582	388	259
@@ -2336,7 +2331,6 @@ COPY characters (char_id, char_name, char_male, char_dead) FROM stdin;
 321	Chella	f	Unknown
 342	Cohollo	t	Unknown
 372	Daario Naharis	t	Unknown
-383	Daemon I Blackfyre	t	Unknown
 393	Dagmer	t	Unknown
 361	Craster	t	Totally
 327	Cersei Lannister	f	Not yet..
@@ -2597,358 +2591,71 @@ SELECT pg_catalog.setval('episodes_ep_id_seq', 50, true);
 --
 
 COPY houses (house_id, house_name) FROM stdin;
-1	Baelish of Harrenhal
-2	Plumm
 3	Greyjoy
 4	Baratheon
 5	Payne
-6	Crakehall
-7	Penrose
-8	Morrigen
-9	Heddle
-10	Mudd
-11	Fowler
 12	Second Sons
 13	Brotherhood without Banners
 14	Baelish
-15	Templeton
-16	Hornwood
-17	Horpe
-19	Grandison
-20	Kettleblack
-21	Rykker
-22	Wylde
-23	Beesbury
 24	Reed
-25	Conklyn
 26	Umber
-27	Durrandon
-28	Vance
-29	wildling
 30	Redwyne
-31	Glover
-32	Gargalen
-33	Uffering
 34	Tarth
-35	Wynch
-36	Swyft
-37	Ghazeen
-38	Butterwell
-39	Hardy
-40	Grell
-41	Velaryon
 42	Cassel
-43	Chelsted
-44	Leek
-45	Deddings
-46	Slate
-47	Flint of Widow's Watch
-48	Windblown
-49	Fell
-50	Kingdom of the Three Daughters
-51	Cerwyn
-52	Mooton
-53	Inchfield
-54	Brax
-55	Bar Emmon
-56	Undying Ones
-57	Musgood
-58	Westerling
-59	Darry
-60	Greenfield
-61	Locke
-62	Varner
-63	Farman
-64	Belgrave
 65	Tollett
-66	Rowan
-67	Condon
 68	Dayne
-69	Farwynd
-70	Sparr
 71	Arryn
-72	Redbeard
-73	Bolling
-74	Wull
-75	Toyne
-76	Blackmont
 77	Mallister
-78	Peake
-79	Leygood
-80	Gower
-81	Bettley
-82	Osgrey
-83	Lynderly
 84	Bracken
-85	Blackbar
-86	Blackberry
-87	Kingsguard
-88	Yronwood
-89	Ruttiger
 90	Clegane
 91	Lannister
-92	Cupps
-93	Grimm
 94	Karstark
-95	Pureborn
-96	Broom
-98	Bywater
-99	Qorgyle
-100	Gardener
-101	Hightower
-102	Rhoynar
-103	Wode
-104	Willum
-105	Estren
-106	Blanetree
-107	Hastwyck
-108	Bushy
-109	Hewett
-110	Foote
-111	Maesters
-112	Redfort
-113	Longthorpe
-114	Bulwer
-115	Potter
 116	Egen
 117	Mormont
-118	Kenning of Kayce
-119	Farwynd of the Lonely Light
-120	Toland
-121	Blackwood
 122	R'hllor
-123	Tawney
-124	Belmore
-125	Lothston
-126	Drumm
-127	Ironmaker
 128	Tarly
 129	Loraq
-130	Dondarrion
-131	Stackspear
-132	Ball
-133	Queensguard
-134	Rhysling
-135	Charlton
-136	Oakheart
 137	Unsullied
 138	Uller
 139	Alchemists' Guild
 140	Kenning of Harlaw
 141	Mance Rayder
-142	Mallery
-143	Lychester
-144	Staedmon
-145	Golden Company
 146	Stark
-147	Royce of the Gates of the Moon
-148	Merryweather
-149	Hoare
 150	Nymeros Martell
-151	Santagar
 152	Selmy
-153	Kandaq
-154	Estermont
 155	Night's Watch
-156	Sunglass
-157	Drowned men
-158	Crabb
-159	Fossoway of New Barrel
-160	Tallhart
-161	Bolton
-162	Caswell
-163	Codd
 164	Tyrell
-165	Hogg
-166	Marbrand
-167	Jordayne
-169	Peach
-170	Vypren
 171	Hetherspoon
-172	Wythers
-173	Stonehouse
-174	Moreland
-175	Grafton
-176	Greyiron
-177	Errol
-178	Nayland
-179	Longwaters
-180	Gaunt
-181	Harlaw
-182	Buckler
-183	Allyrion
 184	Stone Crows
 185	Thirteen
-186	Mullendore
-188	Ryswell
-189	Brune of the Dyre Den
-190	Galare
-191	Cockshaw
-192	Blount
-193	Cafferen
-194	Graceford
-195	Manwoody
-196	Greenhill
-197	Banefort
 198	Frey
-199	Mollen
-200	Strong
-201	Coldwater
-202	Norridge
 203	Yarwyck
-204	Byrch
 205	Good Masters
-206	Blacktyde
-207	Fossoway of Cider Hall
 208	Moore
 209	Lefford
-210	Penny
-211	Band of Nine
-212	Buckwell
-213	The Citadel
 214	Stormcrows
-215	Haigh
 216	Iron Bank of Braavos
-218	Liddle
-219	Corbray
-220	Vikary
-221	Slynt
-222	Harlaw of Grey Garden
-223	Hawick
-224	Merlyn
-225	Graces
-226	Wise Masters
-227	Company of the Cat
-228	Woods
-229	Yew
-230	Norrey
-231	Summer Islands
-232	Shett of Gull Tower
-233	Meadows
-234	Reyne
-235	Costayne
-236	Vance of Wayfarer's Rest
-237	Ryger
-238	Kingswood Brotherhood
 239	Thorne
-240	Myre
 241	Trant
-242	Torrent
-243	Whent
-244	Woolfield
-245	Peckledon
-246	Risley
-247	Cole
 248	Waynwood
-249	Massey
 250	Khal
-251	Piper
-252	Reznak
-253	Ashford
-254	Staunton
-255	Hunter
-256	Drinkwater
-257	Caron
-258	Volmark
-260	Hasty
-261	Cox
 262	Blackfyre
-263	Botley
-264	Prester
-265	Three-eyed crow
-266	Wagstaff
-267	Jast
-268	Turnberry
-269	Mertyns
-270	Swann
 271	Florent
-272	Goodbrother
-273	Manderly
-274	Wayn
-275	Farring
-276	Citadel
-277	Vaith
-278	Flint
-279	Stout
-280	Perreq
-281	Crane
 282	Thenn
-283	Vance of Atranta
-284	\N
-285	Sawyer
-286	Farrow
-287	Chyttering
-288	Celtigar
-289	Harlaw of the Tower of Glimmering
-290	Rosby
 291	Brave Companions
-292	Goodbrook
 293	Seaworth
-294	Sharp
-295	Suggs
 296	Stokeworth
-297	Smallwood
-298	Sarsfield
-299	Lydden
-300	Antler Men
 301	Tully
-302	Stonetree
-303	Royce
-304	Dayne of High Hermitage
-305	Chester
-306	Brune of Brownhollow
-307	Strickland
-308	Harclay
-309	Boggs
-310	Vyrwel
 311	Erenford
 312	Targaryen
-313	Blacks
-314	Harlaw of Harlaw Hall
-315	Sea watch
-317	Cuy
-318	Tyrell of Brightwater Keep
-319	Fossoway
 320	Hollard
-321	Frey of Riverrun
 322	Lorch
-323	Dalt
-324	Rambton
 325	Faceless Men
 326	Faith of the Seven
-327	Serry
-328	Ambrose
-329	Connington
-330	Borrell
-331	Goodbrother of Shatterstone
-332	Happy Port
-333	Poole
-334	Spicer
 335	Bolton of the Dreadfort
-336	Hayford
-337	City Watch of King's Landing
-338	Chataya's brothel
-339	Harlaw of Harridan Hill
 340	Black Ears
-341	Wells
-342	Lonmouth
-343	Dustin
-344	Humble
-345	Shepherd
-346	Hunt
-347	Paege
-348	Moon Brothers
-349	Darklyn
-350	Weaver
-351	Norcross
 352	Martell
 353	Burned Men
-354	Roote
-355	Clifton
-356	Pemford
-357	Webber
-358	Sunderland
-359	Hardyng
 360	Pahl
 361	No Affiliation
 \.
@@ -2966,267 +2673,87 @@ SELECT pg_catalog.setval('houses_house_id_seq', 361, true);
 --
 
 COPY titles (title_id, title_name) FROM stdin;
-1	The Knight of Ninestars
-2	Dowager Queen
 3	Defender of the Vale
 4	Lord of Blackwater Bay
 5	Lord of Evenfall Hall, The Evenstar
 6	Lady of the Vale
 7	Conqueror of Deepwood Motte
-8	Lord of Grassy Vale
 9	Lord of the Eyrie
 10	Knight of the Gate
-11	Lady of Hayford
-12	Lord of Oakenshield
-13	High Steward of Highgarden
-14	Lord Norrey
-15	Lord of Crows Nest
-16	Captain of the Sea Song
-17	Warden of the White Knife
-18	The Bloodroyal
 19	Lord Commander of the Rainbow Guard
-20	Lord of Iron Holt
-21	Lord of Hellholt
 22	Warden of the West
 23	Castellan of Dragonstone (formerly)
-24	Lord of Brightwater (attainted)
 25	Septa
-26	Lord of Feastfires
 27	Sword of the Morning
-28	Master-at-arms of the Red Keep
-29	Hand of the True King
 30	Lord Protector of the Vale
 31	Knight of Clegane's Keep
-32	Red Priest
 33	Lady of the Crossing
 34	Lord Commander of the Kingsguard (former)
-35	Lady of Dragonstone
-36	Lord of Greenstone
-37	Master of Coin
-38	Master-at-arms at the Dun Fort
 39	Commander
-40	Commander of the garrison at White Harbor
-41	Septon
-42	Lady of the Dreadfort
-43	Lord of Goldengrove
-44	Lord Commander of the Queensguard
-45	Lord of Sandstone
-46	Master-at-arms at Storm's End
-47	Commander of the Warrior's Sons
-48	Lord of Rook's Rest
-49	Lord of Ashford
-50	Lord of Starpike, Dunstonbury (stripped) and Whitegrove (stripped)
 51	Master of coin (formerly)
-52	Lady of Acorn Hall
-53	Lord of Wayfarer's Rest
-54	Lord of Yronwood
-55	Queen
 56	Queen of Meereen
-57	Lord of the Port
-58	First Ranger (self-styled)
-59	Lady of Ghost Hill
-60	Captain of Red Jester
 61	Husband to Bears
-62	Blue Grace
-63	Lord of Claw Isle
-64	Castellan of Storm's End
-65	Lord of Honeyholt
-66	Lady of Greenstone
-67	Warlock
-68	Lady of Torrhe's Square
-69	Lord of Crakehall
-70	Lord admiral
-71	Lord of the Grey Glen
-72	Lord of Raventree Hall
-73	Ser (in songs and tales)
-74	Lady of Vaith
-75	Seneschal of Sunspear
 76	Lord of Highgarden
-77	Keeper of the Night Lamp
-78	Castellan of Karhold
-79	Lord of the Deep Den
-80	Captain of the Lord Quellon
 81	Lord of Storm's End
-82	Lord of Castamere
 83	Regent
-84	Voice of Oldtown
-85	Grand admiral (master of ships)
 86	Shield of Lannisport
 87	Lord Paramount of the Trident (lost to Petyr Baelish)
-88	Captain of the Mud Gate
 89	Lord
 90	Castellan
-91	Lord of the Dreadfort
 92	Breaker of Chains
-93	Master-at-arms at the Red Keep
-94	Lady of the Crag
-95	The Knight of Brownhollow
-96	Lord of Oldcastle
 97	Father of the Faithful
-98	Lord of Flint's Finger
-99	Master-at-arms at Highgarden
-100	Lord of Banefort
-101	Lord of the Waters
 102	Castellan of the Dreadfort
-103	Undergaoler
-104	Grand admiral
 105	King of the Andals and the Rhoynar and the First Men (claimant)
-106	Knight of the Order of the Green Hand
 107	Savior of the City (of Kings Landing)
 108	Horn-blower and Breaker of Ice
-109	Captain of Swiftfin
-110	Lord of Coldwater Burn
-111	Priest of the Drowned God
-112	Master-at-arms at Evenfall Hall
 113	Slave of R'hllor
-114	Prince of Summerhall
 115	Lord of Blackhaven
 116	Acting Hand of the King (former)
-117	Defender of the Citadel
-118	Lord of Strongsong
-119	Castellan of Casterly Rock
-120	The Knight of New Barrel
 121	King's Justice
 122	Master of coin (former)
-123	Lord of Pebbleton
-124	Lord of Maidenpool
-125	Knight of Harvest Hall
-126	Lady of Hornwood
 127	Lord Commander of the Night's Watch
-128	Lord of Goldgrass
-129	Brother
-130	Lady of the Leaves
-131	Lord Admiral
-132	Lord Steward of the Iron Islands
-133	Lady of Goldengrove
-134	Lady of the Eyrie
-135	Green Grace
 136	Lord of Karhold
-137	Lady of Blackmont
 138	Undergaoler (as Rugen)
-139	Castellan of Brightwater Keep
-140	Lord treasurer
-141	Lord of Cerwyn
 142	Light of the West
-143	Lord of the Rain House
-144	Lord of Hammerhorn
-145	Lord of Sharp Point
-146	Castellan of the Crag
 147	Prince of Winterfell
-148	Lady of Starpike
-149	Lord of Dragonstone
-150	Lord of Sweetport Sound
 151	Lord of Stone Hedge
-152	Lord of Atranta
-153	Shield of the Faith
-154	Knight of Spottswood
 155	Hand of the Queen
-156	King of Astapor
-157	Lord Marshal of the Mander
-158	Captain of the Wind Witch
-159	Lord of the Marches (claimant)
-160	Lady of Standfast
-161	Lady of Runestone
-162	Lord of Hornvale
-163	Lord of Coldmoat
-164	Lord Paramount of the Mander
-165	Lord of Longbow Hall
 166	Lady of Casterly Rock
-167	Lord of Runestone
-168	Lord of Broad Arch
-169	Lord Harlaw of Harlaw
-170	Captain of the guards at Riverrun
-171	Proctor
-172	Captain of the Nightflyer
-173	Lord of Skyreach
-174	Lord of the Three Towers
 175	Lord of the Crossing
-176	Master of coin
-177	Captain of the Thunderer
 178	Lord of the Last Hearth
-179	Lord of the Marches
-180	Knight of Cornfield
-181	Master of horse at Winterfell
 182	High Septon
 183	Lady of Winterfell
 184	Queen Regent
 185	Ko
-186	Warden of the Prince's Pass
-187	Steward of Ten Towers
-188	Lord Seneschal
-189	Captain of the Lady Marya
-190	Lady of Highgarden
 191	acting First Ranger
 192	Lord Regent
-193	King of the Andals
-194	Oarmaster
 195	Prince of Dragonstone
-196	High Steward of the Vale
 197	Bloodrider
-198	Goodman
-199	Lady of Blackcrown
-200	Master of the Iron Victory
-201	Lord Liddle
 202	First Steward
-203	Lord of Shatterstone
-204	Lord Treasurer
-205	the Knight of Gull Tower
-206	Lord of Wyndhall
 207	Lord of Harrenhal
 208	red hand
 209	First Ranger
-210	Lord of Longtable
-211	Lady of Coldmoat
-212	Lady of Haystack Hall
-213	The Knight of Greenfield
-214	Lord of the Crag
-215	Master of Harlaw Hall
-216	Commander of the City Watch of King's Landing
-217	Lord of Gulltown
-218	Warden of the Stoneway
 219	Protector of the Realm
-220	Lord of Salt Shore
 221	Captain of the guards
-222	Lord of Felwood
 223	Lord of the Golden Tooth
-224	the Knight of Saltpans
-225	Elder Brother
-226	Goodwife
 227	Godswife
-228	Lord of Longsister
-229	Lord of the Tor
 230	Wisdom
 231	Magnar of Thenn
-232	The Harlaw of Harlaw
 233	Grand Maester
-234	Lord of Blacktyde
-235	Good Master
-236	Lady Regent
 237	Lord of the Iron Islands (by law of the green lands)
-238	Lady of Darry
-239	Seneschal
 240	Lord of Casterly Rock
-241	The Norrey
-242	Master of ships
 243	Hand of the King
-244	Keeper of the Gates of the Moon
-245	Lady of Deepwood Motte
-246	Lord of the Arbor
 247	Master of whisperers
 248	Voice of the Seven on Earth
 249	First Sword to the Sealord of Braavos, Water Dancer
 250	Admiral of the Narrow Sea
 251	Ser
-252	Commander of Eastwatch-by-the-Sea
-253	Captain of Cobblecat
 254	Maegi
 255	Lord of Bear Island (stripped)
 256	Warden of the Southern Marches
-257	The Wull
 258	Warden of the East
 259	Khaleesi of the Great Grass Sea
 260	Master of ships (formerly)
-261	Lord Commander of the City Watch of Oldtown
 262	First Builder
 263	Captain of the guard
 264	Warden of the South
@@ -3234,192 +2761,66 @@ COPY titles (title_id, title_name) FROM stdin;
 266	Lord of Riverrun
 267	Magister of Pentos
 268	Lord of Darry
-269	Lord of Duskendale
-270	Lord of the Iron Islands
-271	Khalakka
-272	King
-273	Master of Harridan Hill
 274	Hand of the Queen (self-styled)
 275	Protector of the Realm (claimant)
 276	Queen of the Seven Kingdoms
-277	Master of Grey Garden
-278	Castellan of Torrhen's Square
-279	King of Winter
-280	Lord of Bitterbridge
-281	Lord of the Lonely Light
-282	Mistress of whisperers
-283	The Liddle
-284	Hand of the King (possibly)
-285	King of the Iron Islands
-286	Castellan of Pyke
-287	Knight of Griffin's Roost
-288	Lord of Redfort
-289	Master-at-arms of Runestone
-290	Lord of Nightsong
-291	Lord of the Dyre Den
-292	Lady of Harrenhal
 293	Lord of Bear Island (formerly)
 294	Lord Paramount of the Trident
-295	Castellan of the Dun Fort
-296	Lord Captain of the Iron Fleet
-297	Steward of Winterfell
 298	Princess
 299	Lord of Greywater Watch
-300	Big Bucket
 301	Lord High Captain
-302	Lord of White Harbor
-303	King of the Stepstones and the Narrow Sea
 304	Prince of Dorne
 305	Master of laws
-306	Lord of Old Wyk
 307	Speaker to Gods
-308	Prince of the Red Flower Vale
 309	Queen Dowager
-310	Master of Breakwater Castle
 311	Khal
 312	Princess of Dragonstone
-313	Castellan of Sunspear
 314	Father of Hosts
-315	Admiral
 316	Captain of Sea Bitch
-317	Knight and Master of Standfast
-318	Lord of Sweetsister
 319	Lord of Riverrun (lost to Emmon Frey)
 320	Knight of the Gate (formerly)
-321	Master of the Tower of Glimmering
 322	Captain of Foamdrinker
-323	Defender of the Dispossessed
 324	Ko (formerly)
 325	Lord Steward
-326	Castellan of Dragonstone
-327	Lord Reaper of Pyke
-328	Lord of Heart's Home
-329	Lord of the Three Sisters
-330	Captain of the Golden Storm (formerly)
-331	Lord of the Red Dunes
 332	Heir to Winterfell
-333	Lady of Godsgrace
-334	Lord of Uplands
 335	Warden of the East (formerly)
-336	Lord of Kayce
-337	Lady of Tarbeck Hall
-338	Lady of Widow's Watch
-339	The Knight of Lemonwood
-340	Lord of Sealskin Point
 341	Lord of Winterfell
 342	Lady of Stokeworth
-343	Lord of Griffin's Roost
-344	the Knight of Griffin's Roost
 345	Dowager Lady of Highgarden
-346	Lord of Castle Lychester
-347	Lord of the Tides
-348	Master of Torrhen's Square
 349	Steward of the Twins
 350	King of the Andals and the Rhoynar and the First Men
-351	Lord of Barrowton
-352	First Sword of Braavos
 353	Lord of the Seven Kingdoms (claimant)
-354	Lord of the Snakewood
-355	Warden of the Stone Way
 356	Lord Protector of Stokeworth
 357	Bloodrider of Daenerys Targaryen
 358	High Marshal of the Reach
 359	Prince of the Narrow Sea
-360	Lord of Pinkmaiden
-361	Lady of Barrowton
-362	Prince Regent
 363	Lord of Sunspear
-364	Lord of Stonehelm
-365	Lord of Brightwater Keep
 366	Lord of Horn Hill
-367	Sealord of Braavos
-368	Lady of Golden Tooth
-369	Lord of Greenshield
-370	Lord of Acorn Hall
-371	Lord of Volmark
 372	Prince
 373	Captain of the Black Wind
-374	Lord of Brightwater
 375	Justiciar
 376	Tall-talker
-377	Lord of Kingsgrave
-378	Shield of Sisterton
-379	Captain of the guards for Winterfell
-380	Lord of Southshield
-381	Master of Deepwood Motte
-382	Lord of Karl's Hold
-383	Lord of Starpike
 384	Lord of the Rainwood
 385	His High Holiness
 386	Master of Whisperers
-387	Grand Master
-388	Lord of the Rills
 389	Lord of Casterly Rock (claimant)
-390	King-Beyond-the-Wall
-391	Lady of Old Oak
 392	Queen of the Andals and the Rhoynar and the First Men
-393	King in the North
-394	Lord of Greyshield
 395	Castellan of Harrenhal
-396	Lady of Riverrun
-397	Captain-General
 398	The Mead-king of Ruddy Hall
 399	Master-at-arms of Winterfell
-400	Captain
-401	King of the Wildlings
-402	Lord of Blackcrown
 403	Lord Paramount of the Stormlands
-404	Beacon of the South
-405	Lady of Cerwyn
-406	Lord of Sunflower Hall
 407	Warden of the North
-408	Master-at-arms at Casterly Rock
 409	Lord Commander of the Kingsguard
 410	Captain of the Guard at Sunspear
-411	Cupbearer
 412	Commander of the City Watch
-413	Master of Driftmark
-414	Lord of Rosby
-415	Lady of Duskendale
-416	Chief Undergaoler
 417	Lady of Ironoaks
-418	Lord of Littlesister
 419	Lord of the Seven Kingdoms
-420	Lord of the Hightower
-421	Lord of the Ten Towers
-422	Knight of Sow's Horn
 423	Lady of Bear Island
-424	Captain of the Wraith
 425	Bloodrider of Khal Drogo
-426	Lord of Starfall
-427	Lord of Fair Isle
-428	Master-at-Arms
-429	Lord of Harlaw
-430	Knight of High Hermitage
 431	Lord of the Hornwood
-432	Castellan of Grandview
-433	Tradesman-Captain
-434	Harlaw of Harlaw
-435	Archmaester
-436	Queen of the Iron Islands
-437	Storm King (briefly)
-438	Commander of the Second Sons
 439	Castellan of Winterfell
-440	Lady
-441	Steward of Ashford
 442	Defender of the Marches
-443	Black Bride
-444	Steward
-445	Lord of the Sandship
-446	Defender of the Fords
 447	Maester
-448	Lord of Whitewalls
-449	Castellan of Last Hearth
-450	Lord of Lordsport
-451	Prince of Dragonstone (renounced)
-452	Heir to Lordsport
-453	Lord of Seagard
-454	Lord of Nightsong (claimant)
 \.
 
 
