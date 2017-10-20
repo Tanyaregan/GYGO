@@ -1,27 +1,93 @@
 <!DOCTYPE html>
 <head>
-    <title>Get Your Geek On</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/gygo_got.css" rel="stylesheet">
+
+<title>
+  {% block title %}
+
+  {% endblock %}
+</title>
+
 </head>
 
 <body>
 
-<div id="flashes">
+  <nav class="navbar navbar-default">
 
-    {% for flash in get_flashed_messages() %}
-      <div class="alert alert-danger">{{ flash }}</div>
-    {% endfor %}
+    <div class="container-fluid">
 
-</div>
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">GYGO!</a>
+      </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="/chars">Characters</a></li>
+            <li><a href="/episodes">Episodes</a></li>
+            <li><a href="/houses">Houses</a></li>
+            <li><a href="/titles">Titles</a></li>
+            <li><a href="/search">Search</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-right" form action="/results">
+          <div class="form-group">
+            <input type="text" placeholder="Search by name" name="char_name" maxlength="100" size="30">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </nav>
+
 
 {% block content %}
+
+<div class="container-fluid">
+
+  <div class="row" id="center">
+      <section class="col-xs-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+      <img src="xxx.jpg" class="img-responsive center-block" alt="">
+      <p>GYGO TEXT<p>
+      </section>
+  </div>
+
+  <!-- Row for 3 columns. -->
+
+  <div class="row" id="3-rows">
+      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+          <p>
+          INFO
+          </p>
+      </section>
+
+      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+          <p>
+          INFO
+          </p>
+      </section>
+
+      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
+          <p>
+          INFO
+          </p>
+      </section>
+
+  </div>
+
+</div>
 
 {% endblock %}
 
 
-<!--
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
- -->
+
+<footer>FOOTSIES</footer>
+
 
 </body>
 

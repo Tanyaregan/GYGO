@@ -37,8 +37,9 @@ def wikia_char_article_id(char_name):
     >>> wikia_char_article_id("Catelyn_Stark")
     2119
 
-    >>> wikia_char_article_id('No results for you')
-    None
+    >>> result = wikia_char_article_id(None)
+    >>> type(result)
+    <type 'NoneType'>
 
     """
 
@@ -65,8 +66,9 @@ def wikia_char_thumb(wik_char_id):
     >>> wikia_char_thumb(2119) #doctest: +ELLIPSIS
     u'https://vignette.wikia.nocookie.net/gameofthrones/images/...'
 
-    >>> wikia_char_thumb(10000000)
-    None
+    >>> result = wikia_char_thumb(None)
+    >>> type(result)
+    <type 'NoneType'>
 
     """
 
@@ -102,7 +104,7 @@ def etsy_search(char_name, limit):
     u'https://www.etsy.com/listing/...'
 
     >>> etsy_search('Blaaaaaaah no char', 1)
-    None
+    []
 
     """
 
@@ -180,6 +182,8 @@ def ebay_search(char_name, pagination):
     >>> results = ebay_search('Sansa Stark', {'entriesPerPage': 1, 'pageNumber': 1})[0]['url']
     >>> results  #doctest: +ELLIPSIS
     'http://www.ebay.com/itm/Game-Thrones...'
+
+    >>> result = ebay_search('Totally Fake Data', {'entriesPerPage': 1, 'pageNumber': 1})
 
     """
 

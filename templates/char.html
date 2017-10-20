@@ -1,33 +1,51 @@
 {% extends 'base.html' %}
-{% block content %}
 
-Hallo I yam char detail page.
-<br><br>
+{% block title %} GYGO Character Detail {% endblock %}
+
+{% block content %}
 
 Char id :
 {{ char_id }}
-<br><br>
+<br>
 
 Char name :
 {{ char_name }}
-<br><br>
+<br>
 
 {% if char_thumb %}
 <img src="{{ char_thumb }}">
-<br><br>
+<br>
 {% endif %}
 
 Is this char male?:
 {{ char_male }}
-<br><br>
+<br>
 
 Is this char dead?:
 {{ char_dead }}
-<br><br>
+<br>
 
 Char house is:
 <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
-<br><br>
+<br>
+
+Titles:
+  <ul>
+  {% for title in char_titles %}
+    <li>
+      <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
+    </li>
+  {% endfor %}
+  </ul>
+
+Episodes:
+<ul>
+  {% for ep in char_eps %}
+    <li>
+      <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+    </li>
+  {% endfor %}
+</ul>
 
 {% if ebay_items %}
 eBay Items:
@@ -56,23 +74,5 @@ Etsy items:
 <br><br>
 
 {% endif %}
-
-Titles:
-  <ul>
-  {% for title in char_titles %}
-    <li>
-      <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
-    </li>
-  {% endfor %}
-  </ul>
-
-Episodes:
-<ul>
-  {% for ep in char_eps %}
-    <li>
-      <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
-    </li>
-  {% endfor %}
-</ul>
 
 {% endblock %}
