@@ -4,28 +4,23 @@
 
 {% block content %}
 
-Char id :
-{{ char_id }}
+<h1> {{ char_name }} </h1>
 <br>
 
-Char name :
-{{ char_name }}
-<br>
-
-{% if char_thumb %}
 <img src="{{ char_thumb }}">
 <br>
+
+{% if char_male %}
+Male
+{% else %}
+Female
 {% endif %}
-
-Is this char male?:
-{{ char_male }}
 <br>
 
-Is this char dead?:
-{{ char_dead }}
+Deceased? {{ char_dead }}
 <br>
 
-Char house is:
+House:
 <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
 <br>
 
@@ -40,7 +35,7 @@ Titles:
 
 Episodes:
 <ul>
-  {% for ep in char_eps %}
+ {% for ep in char_eps %}
     <li>
       <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
     </li>

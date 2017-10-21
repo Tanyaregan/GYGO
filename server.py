@@ -54,6 +54,9 @@ def results():
     list_of_char_ids = char_search_by_multiple_args(multi_arg_dict)
     list_of_chars = []
 
+    if len(list_of_char_ids) == 0:
+        return render_template('not_found.html')
+
     for char_id in list_of_char_ids:
         char_obj = char_search_by_id(char_id)
 
@@ -223,7 +226,7 @@ def title_details(title_id):
 
 if __name__ == "__main__":
 
-    app.debug = False
+    app.debug = True
     app.jinja_env.auto_reload = app.debug
 
     connect_to_db(app)

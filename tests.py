@@ -18,27 +18,27 @@ class GygoTests(unittest.TestCase):
 
     def test_index(self):
         result = self.client.get("/")
-        self.assertIn('Or you just get a really cool outfit', result.data)
+        self.assertIn('Get Your Geek On', result.data)
 
     def test_title_page(self):
         result = self.client.get("/titles")
-        self.assertIn('All Titles', result.data)
+        self.assertIn('Titles', result.data)
 
     def test_house_page(self):
         result = self.client.get("/houses")
-        self.assertIn('All Houses', result.data)
+        self.assertIn('Houses', result.data)
 
     def test_episodes_page(self):
         result = self.client.get("/episodes")
-        self.assertIn('All Episodes', result.data)
+        self.assertIn('Episodes', result.data)
 
     def test_chars_page(self):
         result = self.client.get("/chars")
-        self.assertIn('All Characters', result.data)
+        self.assertIn('Characters', result.data)
 
     def test_search_one_result(self):
         result = self.client.get("/search")
-        self.assertIn('Character name', result.data)
+        self.assertIn('Search Results', result.data)
 
     def test_search_multi_result(self):
         result = self.client.get("/results", data={'char_male': False})

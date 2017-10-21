@@ -4,16 +4,11 @@
 
 {% block content %}
 
-The title id is:
-{{ title_id }}
+
+<h1>{{ title_name }}</h1>
 <br><br>
 
-The title name is:
-{{ title_name }}
-<br><br>
-
-
-This title has been given to the following chars:
+Bestowed on the following chars:
 <ul>
   {% for char in char_objs_with_title %}
     <li>

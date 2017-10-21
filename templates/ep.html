@@ -4,19 +4,14 @@
 
 {% block content %}
 
-The ep id is:
-{{ ep_id }}
+<h1> {{ ep_name }} </h1>
 <br><br>
 
-The ep name is:
-{{ ep_name }}
-<br><br>
-
-The ep season is:
+Season:
 {{ ep_season }}
 <br><br>
 
-This ep had the following chars:
+{{ ep_name }} had the following chars:
 <ul>
   {% for char in char_list %}
     <li>
