@@ -6,16 +6,17 @@
 
 
 <h1 class="char_title">"{{ title_name }}"</h1>
-<br><br>
 
 Bestowed on the following characters:
-<ul>
-  {% for char in char_objs_with_title %}
-    <li>
-      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
-    </li>
-</ul>
-{% endfor %}
+<br>
+    <ul>
+        {% for char in char_objs_with_title %}
+            <li>
+                 <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+            </li>
+    {% endfor %}
+    </ul>
+
 <br><br>
 
 {% endblock %}
