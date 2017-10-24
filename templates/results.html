@@ -5,10 +5,10 @@
 {% block content %}
 
 <h1>Search Results</h1>
-<br><br>
 
-These characters met your search criteria:
+<u>These characters met your search criteria:</u><br>
   <ul>
+    <br>
   {% for char in list_of_chars %}
     <li>
       <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>

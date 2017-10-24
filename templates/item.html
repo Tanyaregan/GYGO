@@ -15,7 +15,7 @@ eBay Items:
 <ul>
   {% for item in more_ebay_items %}
     <li>
-      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <a href="{{ item['url'] }}" target="_blank">{{ item['title'] }}<br>
       <img src="{{ item['thumb'] }}"></a>
     </li>
   {% endfor %}
@@ -27,7 +27,7 @@ Etsy items:
 <ul>
   {% for item in more_etsy_items %}
     <li>
-      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
+      <a href="{{ item['url'] }}" target="_blank">{{ item['title'] }}<br>
       <img src="{{ item['thumb'] }}"></a>
     </li>
   {% endfor %}

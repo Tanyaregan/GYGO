@@ -6,8 +6,21 @@
     font-weight: bold;
 }
 
-.navbar-nav>li>a:hover  {
+.navbar-default .navbar-nav > li > a:hover {
+    color: red;
+}
+
+.navbar-default .navbar-nav > li > a:active {
     color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: black;
+}
+
+.carousel-inner .item a img {
+    margin: auto;
+    padding-bottom: 20px;
 }
 
 body {
@@ -15,17 +28,35 @@ body {
     background-repeat: repeat;
     font-family: Gotty, sans-serif;
     color: black;
-    font-size: 24px;
+    font-size: 22px;
+    margin-top: 60px;
+    margin-bottom: 70px;
+}
+
+p {
+    line-height: 0.8;
 }
 
 h1 {
     font-size: 48px;
-    color: #7F091F
+    color: #7F091F;
 }
 
+.index {
+    margin: 0px;
+}
+
+.char_name, .ep_name, .char_title, .char_house {
+    font-weight: bold;
+}
+
+.char_name {
+    line-height: 0px;
+}
 ul {
     list-style-type: none;
     padding-left: 0px;
+    line-height: 1;
 }
 
 a:link {
@@ -44,6 +75,7 @@ a:active{
     color: #E51038;
 }
 
-footer {
-    background:url(/static/img/footy.png) center center 100% auto no-repeat fixed;
+.navbar-fixed-bottom {
+    background-image: url(/static/img/footy.png);
+    background-size: contain;
 }

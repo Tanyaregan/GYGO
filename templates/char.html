@@ -4,10 +4,12 @@
 
 {% block content %}
 
-<h1> {{ char_name }} </h1>
+<h1 class="char_name"> {{ char_name }} </h1>
 <br>
 
-    <section class="col-xs-12 col-sm-4 col-md-6 col-lg-6">
+<div class="row">
+  <section class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3">
+      <br>
       <img src="{{ char_thumb }}">
       <br>
       Gender:
@@ -19,10 +21,9 @@
        <br>
 
       Deceased? {{ char_dead }}
-      <br>
-    </section>
+  </section>
 
-    <section class="col-xs-12 col-sm-4 col-md-6 col-lg-6 feature">
+  <section class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 
       House:
       <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a><br>
@@ -30,7 +31,6 @@
        <br>
 
       {% if char_titles%}
-
         Title(s):
         <ul>
         {% for title in char_titles %}
@@ -39,47 +39,61 @@
             </li>
         {% endfor %}
         </ul>
+      {% endif %}
+
+  </section>
+</div>
+
+  <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+<a href="/chars/{{ char_id }}/episodes"><u>Full episode list</u></a>
+
+<br><br>
+
+    {% if etsy_items %}
+      <u>Costume options:</u><br><br>
+    {% endif %}
+
+  </section>
+
+  <section class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-md-offset-2">
+
+      {% if ebay_items %}
+
+          {% for item in ebay_items %}
+
+            <a href="{{ item['url'] }}" target="_blank"><img src="{{ item['thumb'] }}"></a>&emsp;
+
+          {% endfor %}
 
       {% endif %}
 
-      </section>
+<br><br>
 
-      <a href="/chars/{{ char_id }}/episodes"><u>Episodes</u></a>
+  </section>
 
-<br><br><br>
 
-<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-{% if ebay_items %}
-  eBay Items:
-    <ul>
-      {% for item in ebay_items %}
-        <li>
-          <a href="{{ item['url'] }}"><img src="{{ item['thumb'] }}"></a>
-        </li>
-        <br>
-      {% endfor %}
-    </ul>
-{% endif %}
-
-</section>
-
-<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 {% if etsy_items %}
-Etsy items:
-<ul>
-  {% for item in etsy_items %}
-    <li>
-      <a href="{{ item['url'] }}"><img src="{{ item['thumb'] }}"></a><br>
-    </li>
-    <br>
-  {% endfor %}
-</ul>
 
-<a href="/chars/{{ char_id }}/item">Want to see more costume items?</a>
+ <section class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-md-offset-2">
+
+      {% for item in etsy_items %}
+
+      <a href="{{ item['url'] }}" target="_blank"><img src="{{ item['thumb'] }}"></a>&emsp;
+
+      {% endfor %}
+
 {% endif %}
+<br><br>
+  </section>
 
-</section>
+
+  <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    {% if etsy_items %}
+      <a href="/chars/{{ char_id }}/item">Want to see more costume items?</a>
+    {% endif %}
+
+  </section>
 
 {% endblock %}
