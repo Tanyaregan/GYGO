@@ -1,0 +1,49 @@
+@font-face { font-family: Gotty; src: url('gotty.ttf'); }
+
+.nav, .navbar, .navbar-default, .navbar-fixed-top {
+    background-color: #A60B28;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-nav>li>a:hover  {
+    color: white;
+}
+
+body {
+    background-image: url(img/regal_r.png);
+    background-repeat: repeat;
+    font-family: Gotty, sans-serif;
+    color: black;
+    font-size: 24px;
+}
+
+h1 {
+    font-size: 48px;
+    color: #7F091F
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+a:link {
+    color: #A60B28;
+}
+
+a:visited {
+    color: #990A25;
+}
+
+a:hover{
+    color: black;
+}
+
+a:active{
+    color: #E51038;
+}
+
+footer {
+    background:url(/static/img/footy.png) center center 100% auto no-repeat fixed;
+}

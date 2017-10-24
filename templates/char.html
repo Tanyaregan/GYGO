@@ -7,67 +7,79 @@
 <h1> {{ char_name }} </h1>
 <br>
 
-<img src="{{ char_thumb }}">
-<br>
+    <section class="col-xs-12 col-sm-4 col-md-6 col-lg-6">
+      <img src="{{ char_thumb }}">
+      <br>
+      Gender:
+      {% if char_male %}
+        Male
+      {% else %}
+        Female
+      {% endif %}
+       <br>
 
-{% if char_male %}
-Male
-{% else %}
-Female
-{% endif %}
-<br>
+      Deceased? {{ char_dead }}
+      <br>
+    </section>
 
-Deceased? {{ char_dead }}
-<br>
+    <section class="col-xs-12 col-sm-4 col-md-6 col-lg-6 feature">
 
-House:
-<a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a>
-<br>
+      House:
+      <a href="/houses/{{ char_house.house_id }}">{{ char_house.house_name }}</a><br>
+      <img src="/static/img/house_stark.png">
+       <br>
 
-Titles:
-  <ul>
-  {% for title in char_titles %}
-    <li>
-      <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
-    </li>
-  {% endfor %}
-  </ul>
+      {% if char_titles%}
 
-Episodes:
-<ul>
- {% for ep in char_eps %}
-    <li>
-      <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
-    </li>
-  {% endfor %}
-</ul>
+        Title(s):
+        <ul>
+        {% for title in char_titles %}
+            <li>
+              <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+
+      {% endif %}
+
+      </section>
+
+      <a href="/chars/{{ char_id }}/episodes"><u>Episodes</u></a>
+
+<br><br><br>
+
+<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 {% if ebay_items %}
-eBay Items:
-<ul>
-  {% for item in ebay_items %}
-    <li>
-      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
-      <img src="{{ item['thumb'] }}"></a>
-    </li>
-  {% endfor %}
-</ul>
+  eBay Items:
+    <ul>
+      {% for item in ebay_items %}
+        <li>
+          <a href="{{ item['url'] }}"><img src="{{ item['thumb'] }}"></a>
+        </li>
+        <br>
+      {% endfor %}
+    </ul>
 {% endif %}
+
+</section>
+
+<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 {% if etsy_items %}
 Etsy items:
 <ul>
   {% for item in etsy_items %}
     <li>
-      <a href="{{ item['url'] }}">{{ item['title'] }}<br>
-      <img src="{{ item['thumb'] }}"></a>
+      <a href="{{ item['url'] }}"><img src="{{ item['thumb'] }}"></a><br>
     </li>
+    <br>
   {% endfor %}
 </ul>
 
 <a href="/chars/{{ char_id }}/item">Want to see more costume items?</a>
-<br><br>
-
 {% endif %}
+
+</section>
 
 {% endblock %}

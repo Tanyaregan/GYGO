@@ -4,21 +4,24 @@
 
 {% block content %}
 
-<h1> {{ ep_name }} </h1>
-<br><br>
-
+<h1> "{{ ep_name }}" </h1>
+<br>
 Season:
 {{ ep_season }}
+<br>
+<img src="/static/img/ep_pointy.png" img class="enter-block">
 <br><br>
 
-{{ ep_name }} had the following chars:
-<ul>
-  {% for char in char_list %}
+"{{ ep_name }}" had the following characters:
+<br>
+    <ul>
+        {% for char in char_list %}
     <li>
       <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
     </li>
-</ul>
-{% endfor %}
+        {% endfor %}
+    </ul>
+
 <br><br>
 
 

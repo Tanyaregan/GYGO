@@ -6,11 +6,11 @@
 
   <h1>Titles</h1>
   <ul>
-  {% for title in title_list %}
-    <li>
-      <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
-    </li>
-  {% endfor %}
+    {% for title in title_list %}
+        <li>
+            <a href="/titles/{{ title.title_id }}">{{ title.title_name }}</a>
+        </li>
+    {% endfor %}
   </ul>
 
 

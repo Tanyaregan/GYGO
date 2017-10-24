@@ -19,7 +19,7 @@
     <div class="container-fluid">
 
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">GYGO!</a>
+        <a class="navbar-brand" href="/"><img src='/static/img/GYGO.png'</a>
       </div>
 
         <ul class="nav navbar-nav">
@@ -32,7 +32,7 @@
 
         <form class="navbar-form navbar-right" form action="/results">
           <div class="form-group">
-            <input type="text" placeholder="Character name" name="char_name" maxlength="100" size="30">
+            <input type="text" placeholder="Enter a character name" name="char_name" maxlength="100" size="30">
           </div>
           <button type="submit" class="btn btn-default">Search</button>
         </form>
@@ -44,41 +44,10 @@
   </nav>
 
 
+<div class="container-fluid text-center">
+
 {% block content %}
 
-<div class="container-fluid">
-
-  <div class="row" id="center">
-      <section class="col-xs-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-      <img src="xxx.jpg" class="img-responsive center-block" alt="">
-      <p>GYGO TEXT<p>
-      </section>
-  </div>
-
-  <!-- Row for 3 columns. -->
-
-  <div class="row" id="3-rows">
-      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
-          <p>
-          INFO
-          </p>
-      </section>
-
-      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
-          <p>
-          INFO
-          </p>
-      </section>
-
-      <section class="col-xs-12 col-sm-4 col-md-4 col-lg-4 feature">
-          <p>
-          INFO
-          </p>
-      </section>
-
-  </div>
-
-</div>
 
 {% endblock %}
 
@@ -86,8 +55,9 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-<footer>FOOTSIES</footer>
-
+<footer>
+Cosplay for all!
+</footer>
 
 </body>
 

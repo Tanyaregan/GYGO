@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %} GYGO Character Episode Details{% endblock %}
+
+{% block content %}
+
+{{ char_name }} has been in:
+
+<br><br>
+        <ul>
+          Season 1
+          {% for ep in char_eps %}
+              {% if ep.ep_season == 1 %}
+              <li>
+                <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+              </li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+
+        <ul>
+          Season 2
+          {% for ep in char_eps %}
+              {% if ep.ep_season == 2 %}
+              <li>
+                <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+              </li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+
+        <ul>
+          Season 3
+          {% for ep in char_eps %}
+              {% if ep.ep_season == 3 %}
+              <li>
+                <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+              </li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+
+        <ul>
+          Season 4
+          {% for ep in char_eps %}
+              {% if ep.ep_season == 4 %}
+              <li>
+                <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+              </li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+
+        <ul>
+          Season 5
+          {% for ep in char_eps %}
+              {% if ep.ep_season == 5 %}
+              <li>
+                <a href="/episodes/{{ ep.ep_id }}">{{ ep.ep_name }}</a>
+              </li>
+              {% endif %}
+           {% endfor %}
+        </ul>
+
+{% endblock %}

@@ -133,6 +133,26 @@ def char_item_details(char_id):
                            more_etsy_items=more_etsy_items,
                            more_ebay_items=more_ebay_items)
 
+@app.route("/chars/<int:char_id>/episodes")
+def char_ep_details(char_id):
+    """Shows more items for sale relating to char."""
+
+    char_info = char_search_by_id(char_id)
+
+    char = char_info['char_name']
+
+    wik_search_name = search_term_char_name(char)
+    wik_char_id = wikia_char_article_id(wik_search_name)
+    char_thumb = wikia_char_thumb(wik_char_id)
+
+
+    return render_template("char_eps.html",
+                           char_id=char_id,
+                           char_name=char,
+                           char_thumb=char_thumb,
+                           char_eps=char_info['ep_objs'])
+
+
 
 ##################################################
 # Episode routes

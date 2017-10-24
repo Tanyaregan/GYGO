@@ -3,19 +3,22 @@
 {% block title %} GYGO House Detail {% endblock %}
 
 {% block content %}
-<br><br>
+<br>
 
+<img src="/static/img/house_baratheon.png">
 <h1> {{ house_name }} </h1>
+<img src="/static/img/house_baratheon.png">
+
 <br><br>
 
 The following characters are in this house:
-<ul>
-  {% for char in house_char_obj_list %}
-    <li>
-      <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
-    </li>
-</ul>
-{% endfor %}
+    <ul>
+        {% for char in house_char_obj_list %}
+            <li>
+                <a href="/chars/{{ char.char_id }}">{{ char.char_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 <br><br>
 
 {% endblock %}
