@@ -5,11 +5,30 @@
 {% block content %}
 
 <h1 class="ep_name"> "{{ ep_name }}" </h1>
-<br>
 Season:
 {{ ep_season }}
 <br>
-<img src="/static/img/ep_pointy.png" img class="enter-block">
+
+{% if ep_season == 1 %}
+<img src="/static/img/ep_season_1.png">
+{% endif %}
+
+{% if ep_season == 2 %}
+<img src="/static/img/ep_season_2.jpg">
+{% endif %}
+
+{% if ep_season == 3 %}
+<img src="/static/img/ep_season_3.jpg">
+{% endif %}
+
+{% if ep_season == 4 %}
+<img src="/static/img/ep_season_4.jpg">
+{% endif %}
+
+{% if ep_season == 5 %}
+<img src="/static/img/ep_season_5.jpg">
+{% endif %}
+
 <br><br>
 
 <u>"{{ ep_name }}" had the following characters:</u><br>
