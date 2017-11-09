@@ -2071,6 +2071,8 @@ COPY char_houses (charhouse_id, char_id, house_id) FROM stdin;
 2933	902	4
 3319	1288	4
 3750	1719	4
+4069	2038	335
+4070	2039	335
 \.
 
 
@@ -2078,7 +2080,7 @@ COPY char_houses (charhouse_id, char_id, house_id) FROM stdin;
 -- Name: char_houses_charhouse_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('char_houses_charhouse_id_seq', 4068, true);
+SELECT pg_catalog.setval('char_houses_charhouse_id_seq', 4070, true);
 
 
 --
@@ -2373,7 +2375,6 @@ COPY characters (char_id, char_name, char_male, char_dead) FROM stdin;
 919	Jon Umber (Smalljon)	t	Unknown
 920	Jon Umber (Greatjon)	t	Unknown
 927	Jonos Bracken	t	Unknown
-912	Jon Arryn	t	Sorta
 939	Jory Cassel	t	Totally
 900	Jojen Reed	t	Totally
 852	Janos Slynt	t	Totally
@@ -2453,6 +2454,7 @@ COPY characters (char_id, char_name, char_male, char_dead) FROM stdin;
 1669	Shagga	t	Unknown
 1551	Robert Baratheon	t	Totally
 1601	Rorge	t	Totally
+912	Jon Arryn	t	Totally
 1565	Rodrik Cassel	t	Totally
 1683	Shireen Baratheon	f	Totally
 1668	Shae	f	Totally
@@ -2511,6 +2513,8 @@ COPY characters (char_id, char_name, char_male, char_dead) FROM stdin;
 1332	Olenna Tyrell	f	Totally
 216	Benjen Stark	t	Totally
 925	Jon Snow	t	Sorta
+2038	Roose Bolton	t	Totally..
+2039	Walda Bolton	f	Totally..
 \.
 
 
@@ -2518,7 +2522,7 @@ COPY characters (char_id, char_name, char_male, char_dead) FROM stdin;
 -- Name: characters_char_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('characters_char_id_seq', 2037, true);
+SELECT pg_catalog.setval('characters_char_id_seq', 2039, true);
 
 
 --
@@ -2628,6 +2632,7 @@ COPY houses (house_id, house_name) FROM stdin;
 171	Hetherspoon
 184	Stone Crows
 185	Thirteen
+335	Bolton
 198	Frey
 203	Yarwyck
 205	Good Masters
@@ -2652,7 +2657,6 @@ COPY houses (house_id, house_name) FROM stdin;
 322	Lorch
 325	Faceless Men
 326	Faith of the Seven
-335	Bolton of the Dreadfort
 340	Black Ears
 352	Martell
 353	Burned Men
