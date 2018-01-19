@@ -13,17 +13,16 @@ Name, House, Episode, Title, Gender, or Deceased (It is GoT, after all..)
 Basic search page:
 ![search](https://github.com/Tanyaregan/GYGO/blob/master/static/img/search.png)
 
-Episode page:
-![episode](https://github.com/Tanyaregan/GYGO/blob/master/static/img/eps.png)
+You can also just browse through names, houses or episodes.
 
-Once you get there, the character page will show you all of the info on that character,
+Once you get to a character you like, the main results page will show you all of the info on that character,
 plus related costume items for sale on Etsy and eBay.
 
 Character page:
 ![character](https://github.com/Tanyaregan/GYGO/blob/master/static/img/char.png)
 
-Item details page:
-![item](https://github.com/Tanyaregan/GYGO/blob/master/static/img/items.png)
+Database Schema:
+![](https://github.com/Tanyaregan/GYGO/blob/master/static/img/DB%20model.jpg)
 
 This version is set up for Game of Thrones, but it is designed to be portable to multiple fandoms.
 Stay tuned for Star Wars!
